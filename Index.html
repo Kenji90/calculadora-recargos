@@ -1,0 +1,2264 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de Recargos y Horas Extra</title>
+  <style>
+    :root {
+      --bg: #f7f5fb;
+      --bg-soft: #fbfaff;
+      --card: rgba(255,255,255,.88);
+      --card-solid: #ffffff;
+      --text: #201b2c;
+      --muted: #716b7d;
+      --line: #e8e2ef;
+      --line-strong: #d9d0e5;
+      --primary: #6f3ba8;
+      --primary-dark: #4b2377;
+      --primary-soft: #f1eafb;
+      --accent: #9d68d4;
+      --success: #16794c;
+      --warning: #b7791f;
+      --danger: #b42318;
+      --shadow: 0 18px 45px rgba(52, 35, 78, .08);
+      --shadow-soft: 0 8px 22px rgba(52, 35, 78, .06);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --input-bg: #ffffff;
+      --header-bg: rgba(255,255,255,.76);
+      --table-head: #f4eefb;
+      --hover: #fbf8ff;
+      --festivo-bg: #fff4da;
+      --festivo-text: #8a5700;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #15111d;
+      --bg-soft: #1d1728;
+      --card: rgba(31,25,42,.86);
+      --card-solid: #211a2d;
+      --text: #f4effb;
+      --muted: #b9aec8;
+      --line: #362a48;
+      --line-strong: #4b3b61;
+      --primary: #b98cff;
+      --primary-dark: #d2b6ff;
+      --primary-soft: #312241;
+      --accent: #c8a1ff;
+      --success: #62d69a;
+      --warning: #f1bc63;
+      --danger: #ff8a80;
+      --shadow: 0 18px 48px rgba(0,0,0,.26);
+      --shadow-soft: 0 8px 22px rgba(0,0,0,.18);
+      --input-bg: #191322;
+      --header-bg: rgba(28,22,38,.78);
+      --table-head: #2a2038;
+      --hover: #261d33;
+      --festivo-bg: #3b2b13;
+      --festivo-text: #ffd37a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(157,104,212,.14), transparent 31rem),
+        radial-gradient(circle at top right, rgba(111,59,168,.10), transparent 27rem),
+        linear-gradient(180deg, var(--bg-soft), var(--bg));
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      min-height: 76px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      border-radius: 15px;
+      color: #fff;
+      background: linear-gradient(145deg, var(--primary-dark), var(--accent));
+      box-shadow: 0 10px 22px rgba(111,59,168,.24);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: .04em;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(21px, 3vw, 29px);
+      line-height: 1.12;
+      letter-spacing: -.03em;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 24px 44px;
+    }
+
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      position: relative;
+      margin-bottom: 18px;
+      padding: 22px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .card.compact { padding: 18px; }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 17px;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.25;
+      letter-spacing: -.015em;
+    }
+
+    h2::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    label {
+      display: block;
+      margin: 0 0 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      line-height: 1.3;
+    }
+
+    input, select, button { font: inherit; }
+
+    input, select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease, transform .12s ease;
+    }
+
+    input:hover, select:hover { border-color: var(--accent); }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(157,104,212,.16);
+    }
+
+    .hint {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .hour-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .button-field {
+      align-self: end;
+    }
+
+    .button-field button { width: 100%; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
+      align-items: center;
+    }
+
+    button {
+      min-height: 40px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 9px 15px;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      box-shadow: var(--shadow-soft);
+      font-weight: 780;
+      letter-spacing: .004em;
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease, background .15s ease;
+    }
+
+    button:hover {
+      filter: brightness(.98);
+      transform: translateY(-1px);
+    }
+
+    button.secondary { background: #383044; box-shadow: none; }
+    button.light {
+      background: var(--input-bg);
+      color: var(--text);
+      border-color: var(--line-strong);
+      box-shadow: none;
+    }
+    button.ok { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); }
+
+    details.advanced {
+      margin-bottom: 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    details.advanced summary {
+      cursor: pointer;
+      padding: 16px 20px;
+      color: var(--muted);
+      font-weight: 800;
+      list-style: none;
+      user-select: none;
+    }
+
+    details.advanced summary::-webkit-details-marker { display: none; }
+
+    details.advanced .advanced-body {
+      padding: 0 20px 20px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card-solid);
+      scrollbar-width: thin;
+      scrollbar-color: var(--line-strong) transparent;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 900px;
+    }
+
+    #tablaCalendario { min-width: 760px; }
+    #tablaResumen { min-width: 560px; }
+    #tablaResultado { min-width: 760px; }
+
+    th, td {
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    .tabla-nomina {
+      min-width: 760px;
+    }
+
+    .tabla-nomina tfoot td {
+      background: transparent;
+      border-bottom: 0;
+      font-weight: 850;
+      font-size: 14px;
+    }
+
+    .tabla-nomina .total-label {
+      text-align: right;
+      color: var(--text);
+    }
+
+    .tabla-nomina tbody tr.nomina-base td {
+      font-weight: 650;
+    }
+
+    .tabla-nomina tbody tr.nomina-descuento td {
+      color: var(--muted);
+    }
+
+    .tabla-nomina tbody tr.nomina-descuento td:last-child {
+      color: var(--danger);
+      font-weight: 800;
+    }
+
+    .tabla-nomina tbody tr.nomina-subtotal td {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--table-head);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) td { background-color: rgba(125, 91, 162, .025); }
+    tbody tr:hover td { background-color: var(--hover); }
+
+    td.number, th.number { text-align: right; }
+
+    #tablaCalendario select {
+      min-width: 220px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border-radius: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      min-height: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 10px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-weight: 780;
+      font-size: 12px;
+    }
+
+    tbody tr.is-domingo-festivo td {
+      background: var(--festivo-bg) !important;
+    }
+
+    tbody tr.is-domingo-festivo:hover td {
+      filter: brightness(.985);
+    }
+
+    tbody tr.is-domingo-festivo td:nth-child(2),
+    tbody tr.is-domingo-festivo td:nth-child(3) {
+      color: var(--festivo-text);
+      font-weight: 850;
+    }
+
+    .turno-dia.color-vacio {
+      background: var(--input-bg);
+      color: var(--text);
+      border-color: var(--line-strong);
+      font-weight: 500;
+    }
+
+    .turno-dia.color-descanso {
+      background: #ffffff;
+      color: #5f5a68;
+      border-color: #d8d3df;
+      font-weight: 800;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-descanso {
+      background: #2b2533;
+      color: #d8d1e4;
+      border-color: #50435e;
+    }
+
+    .turno-dia.color-m {
+      background: #78bd55;
+      color: #14310a;
+      border-color: #5aa33b;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-t {
+      background: #69aee8;
+      color: #102a42;
+      border-color: #418fd0;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-n {
+      background: #f6c400;
+      color: #4a3700;
+      border-color: #d8aa00;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-4h {
+      background: #badd8a;
+      color: #2f4607;
+      border-color: #99c55d;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-12h-dia {
+      background: #92cb74;
+      color: #17350d;
+      border-color: #68b34e;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-12h-tarde {
+      background: #efb66a;
+      color: #522f00;
+      border-color: #dc9a3f;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-12h-noche {
+      background: #f0a900;
+      color: #4b2d00;
+      border-color: #d08b00;
+      font-weight: 850;
+    }
+
+    .error-box,.ok-box {
+      position: sticky;
+      bottom: 16px;
+      z-index: 4;
+      display: none;
+      margin-top: 14px;
+      padding: 13px 15px;
+      white-space: pre-wrap;
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+    }
+
+    .error-box { background: #fff3f2; color: #912018; border: 1px solid #f4c7c3; }
+    .ok-box { background: #effaf3; color: #05603a; border: 1px solid #bde5cc; }
+
+    html[data-theme="dark"] .error-box { background: #3a1f22; color: #ffb4ad; border-color: #7f3336; }
+    html[data-theme="dark"] .ok-box { background: #143323; color: #9ee6b8; border-color: #2d7048; }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .secondary-summary {
+      margin-top: -4px;
+    }
+
+    .secondary-summary .metric {
+      min-height: 78px;
+      box-shadow: none;
+    }
+
+    .secondary-summary .metric .value {
+      font-size: 18px;
+    }
+
+    .metric {
+      position: relative;
+      overflow: hidden;
+      min-height: 92px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(150deg, var(--card-solid), var(--bg-soft));
+    }
+
+    .metric::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(var(--primary), var(--accent));
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 800;
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .metric .value {
+      margin-top: 8px;
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.025em;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner { padding-inline: 18px; }
+      main { padding: 18px; }
+      .grid.cols-2,.grid.cols-3,.grid.cols-4 { grid-template-columns: 1fr 1fr; }
+      .summary-cards { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .header-inner { min-height: 72px; padding: 12px 15px; }
+      .brand-mark { width: 38px; height: 38px; flex-basis: 38px; border-radius: 13px; }
+      main { padding: 14px; }
+      .card { padding: 16px; margin-bottom: 14px; border-radius: 18px; }
+      .grid.cols-2,.grid.cols-3,.grid.cols-4 { grid-template-columns: 1fr; }
+      .summary-cards { grid-template-columns: 1fr; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .actions button { width: 100%; }
+      h2 { font-size: 16px; }
+    }
+
+    @media print {
+      .app-header,.no-print,.actions,input,select,button,details.advanced { display: none!important; }
+      main { max-width: none; padding: 0; }
+      .card { box-shadow: none; border: 0; margin: 0 0 18px; padding: 0; overflow: visible; }
+      .table-wrap { border: 0; overflow: visible; }
+      table { min-width: 0; }
+      th { position: static; }
+      body { background: #fff; }
+    }
+  
+    .card-hero {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-solid) 82%, transparent), var(--card));
+      border-color: color-mix(in srgb, var(--line-strong) 70%, transparent);
+    }
+
+    .hour-pill.large {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px 14px;
+      font-size: 14px;
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+    }
+
+    .table-wrap {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .table-wrap::-webkit-scrollbar {
+      height: 10px;
+      width: 10px;
+    }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: var(--line-strong);
+      border-radius: 999px;
+    }
+    .table-wrap::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    input, select {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+    }
+
+    .app-header {
+      box-shadow: 0 8px 30px rgba(40, 26, 60, .08);
+    }
+
+    .brand-mark {
+      font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
+    .hint {
+      max-width: 70ch;
+    }
+
+    #tablaCalendario tbody tr td {
+      transition: background-color .18s ease, color .18s ease;
+    }
+
+    .turno-dia {
+      transition: background-color .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
+    }
+    .turno-dia:hover {
+      transform: translateY(-1px);
+    }
+
+    .turno-dia.color-descanso {
+      background: #ececef;
+      color: #4f5560;
+      border-color: #d2d6dd;
+      font-weight: 800;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-descanso {
+      background: #333842;
+      color: #e3e7ee;
+      border-color: #454c59;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: #79be5a;
+      color: #14310a;
+      border-color: #5ca63d;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: #6daee6;
+      color: #102a42;
+      border-color: #4a92d2;
+      font-weight: 850;
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: #f0a54b;
+      color: #4c2b00;
+      border-color: #d4892c;
+      font-weight: 850;
+    }
+
+    .tabla-nomina tfoot td {
+      font-size: 15px;
+    }
+
+    .tabla-nomina tbody tr:hover td {
+      background: var(--hover);
+    }
+
+    @media (max-width: 620px) {
+      .hour-pill.large {
+        min-height: 42px;
+      }
+    }
+
+    .import-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 0 0 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--primary-soft) 70%, transparent);
+    }
+
+    .import-copy {
+      display: grid;
+      gap: 3px;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .import-copy span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .import-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .import-actions input[type="file"] {
+      width: 260px;
+      min-height: 40px;
+      padding: 8px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    input[type="date"] {
+      cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+      .import-panel {
+        align-items: stretch;
+        flex-direction: column;
+      }
+      .import-actions {
+        justify-content: stretch;
+      }
+      .import-actions input[type="file"],
+      .import-actions button {
+        width: 100%;
+      }
+    }
+</style>
+</head>
+
+<body>
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">RH</div>
+      <div>
+        <div class="eyebrow">Liquidación laboral</div>
+        <h1>Recargos y horas extra</h1>
+      </div>
+    </div>
+    <button id="btnTema" class="light" type="button" onclick="alternarTema()">Modo oscuro</button>
+  </div>
+</header>
+
+<main>
+  <section class="card card-hero">
+    <h2>1. Datos generales</h2>
+    <div class="grid cols-2">
+      <div>
+        <label for="salario">Salario básico mensual</label>
+        <input id="salario" value="1990000">
+        <div class="hint">Ingresa el salario base para calcular recargos, horas extra y resumen estimado.</div>
+      </div>
+      <div>
+        <label>Valor hora</label>
+        <div id="valorHoraTexto" class="hour-pill large">Valor hora: $9.045,45</div>
+        <div class="hint">Calculado automáticamente con base en el salario mensual.</div>
+      </div>
+    </div>
+
+    <!-- Valores internos no visibles -->
+    <input type="hidden" id="auxTransporte" value="249095">
+    <input type="hidden" id="smlmvVigente" value="1750905">
+    <input type="hidden" id="porcSalud" value="4">
+    <input type="hidden" id="porcPension" value="4">
+    <input type="hidden" id="diasPago" value="30">
+    <input type="hidden" id="inicioNocturnaInterno" value="19:00">
+    <input type="hidden" id="finNocturnaInterno" value="06:00">
+    <input type="hidden" id="fechaCambioInterno" value="15/07/2026">
+    <input type="hidden" id="limiteAntesInterno" value="44">
+    <input type="hidden" id="limiteDespuesInterno" value="42">
+    <input type="hidden" id="modoAcumulacionInterno" value="bloque">
+    <input type="hidden" id="proyecto" value="">
+    <input type="hidden" id="descripcion" value="">
+    <input type="hidden" id="valorHoraVista" value="">
+  </section>
+
+  <details class="advanced no-print">
+    <summary>Porcentajes y reglas avanzadas</summary>
+    <div class="advanced-body">
+      <div class="grid cols-4">
+        <div><label>RECARGO NOCTURNO 035</label><input id="pRN" value="0,35"></div>
+        <div><label>RECARGO DIURNO FESTIVO 90</label><input id="pRDF" value="0,90"></div>
+        <div><label>RECARGO NOCTURNO FESTIVO 125</label><input id="pRNF" value="1,25"></div>
+        <div><label>HORAS EXTRAS DIURNAS 125</label><input id="pHED" value="1,25"></div>
+        <div><label>HORAS EXTRAS NOCTURNAS 175</label><input id="pHEN" value="1,75"></div>
+        <div><label>H.E.D.DOMINICAL/FESTIVO 215</label><input id="pHEDF" value="2,15"></div>
+        <div><label>H.E.N.DOMINICAL/FESTIVO 265</label><input id="pHENF" value="2,65"></div>
+      </div>
+      <div class="hint">Se dejan ocultos porque normalmente no necesitas modificarlos. Desde julio de 2026 el recargo dominical/festivo queda parametrizado al 90%.</div>
+    </div>
+  </details>
+
+  <section class="card no-print">
+    <h2>2. Ingreso de turnos</h2>
+    <div class="grid cols-4" style="margin-bottom:14px;">
+      <div>
+        <label for="fechaInicioTurno">Fecha inicio</label>
+        <input id="fechaInicioTurno" type="date" value="2026-07-01">
+      </div>
+      <div>
+        <label for="fechaFinTurno">Fecha fin</label>
+        <input id="fechaFinTurno" type="date" value="2026-07-31">
+      </div>
+      <div class="button-field">
+        <label aria-hidden="true">Acción</label>
+        <button type="button" onclick="generarCalendario()">Generar lista</button>
+      </div>
+      <div class="button-field">
+        <label aria-hidden="true">Acción</label>
+        <button type="button" class="light" onclick="limpiarCalendario()">Limpiar lista</button>
+      </div>
+    </div>
+
+    <div class="import-panel">
+      <div class="import-copy">
+        <strong>Importar turnos desde Excel o CSV</strong>
+        <span>Formato principal: columna A = Fecha y columna B = Horario. También acepta encabezados si el archivo los trae.</span>
+      </div>
+      <div class="import-actions">
+        <input id="archivoTurnos" type="file" accept=".xlsx,.csv,.txt">
+        <button type="button" class="light" onclick="descargarPlantillaTurnos()">Descargar plantilla Excel</button>
+      </div>
+    </div>
+
+    <div class="table-wrap no-print">
+      <table id="tablaCalendario">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Día</th>
+            <th>Fecha</th>
+            <th style="width:110px">Dom./Festivo</th>
+            <th>Horario</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="hint" style="margin-top:8px;">
+      Los domingos y festivos se resaltan. Los horarios cambian de color. Para descanso, selecciona DESCANSO en Horario.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3. Resumen</h2>
+    <div class="table-wrap">
+      <table id="tablaResumen" class="tabla-nomina">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th class="number">Cant</th>
+            <th class="number">Pago</th>
+            <th class="number">Descuento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="4" style="text-align:center; color:var(--muted)">No hay datos calculados</td></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" class="total-label">Total de pago y descuento:</td>
+            <td class="number" id="totalPagoResumen">$0</td>
+            <td class="number" id="totalDescuentoResumen">$0</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="total-label">Neto:</td>
+            <td class="number" id="netoResumen">$0</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="hint" style="margin-top:10px;">
+      Resumen estimado: incluye sueldo ordinario, auxilio de transporte automático si aplica, recargos, horas extra, salud y pensión.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>4. Resultado</h2>
+    <span class="badge" id="contadorResultado">0 registros</span>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table id="tablaResultado">
+        <thead>
+          <tr>
+            <th>NOMBRE CONCEPTO</th>
+            <th class="number">No de HORAS</th>
+            <th>Fecha y hora de inicio de la HHEE</th>
+            <th>Fecha y hora de finalización de la HHEE</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card compact no-print">
+    <h2>5. Acciones</h2>
+    <div class="actions">
+      <button type="button" class="ok" onclick="calcular()">CALCULAR</button>
+      <button type="button" class="light" onclick="limpiarResultado()">LIMPIAR RESULTADO</button>
+      <button type="button" class="secondary" onclick="exportarCSV()">EXPORTAR CSV</button>
+      <button type="button" class="secondary" onclick="copiarTabla()">COPIAR TABLA</button>
+      <button type="button" class="secondary" onclick="window.print()">IMPRIMIR</button>
+    </div>
+  </section>
+
+  <div id="mensajesError" class="error-box"></div>
+  <div id="mensajesOk" class="ok-box"></div>
+</main>
+
+<script>
+
+/*
+  Calculadora de recargos y horas extra.
+
+  Puntos editables principales:
+  - Porcentajes: función obtenerFactores()
+  - Nombres de conceptos: objeto CONCEPTOS
+  - Horarios M, T, N: función parsearTurno()
+  - Límites: campos limiteAntes, limiteDespues y fechaCambio
+*/
+
+const MS_HORA = 60 * 60 * 1000;
+const MS_MINUTO = 60 * 1000;
+
+const CONCEPTOS = {
+  RN: "RECARGO NOCTURNO 035",
+  RDF: "RECARGO DIURNO FESTIVO 90",
+  RNF: "RECARGO NOCTURNO FESTIVO 125",
+  HED: "HORAS EXTRAS DIURNAS 125",
+  HEN: "HORAS EXTRAS NOCTURNAS 175",
+  HEDF: "H.E.D.DOMINICAL/FESTIVO 215",
+  HENF: "H.E.N.DOMINICAL/FESTIVO 265"
+};
+
+let resultadoActual = [];
+
+// Festivos sugeridos Colombia 2026. Son editables: puede desmarcarlos o marcar otros manualmente.
+const FESTIVOS_PRE_CARGADOS = new Set([
+  "2026-01-01","2026-01-12","2026-03-23","2026-04-02","2026-04-03",
+  "2026-05-01","2026-05-18","2026-06-08","2026-06-15","2026-06-29",
+  "2026-07-13","2026-07-20","2026-08-07","2026-08-17","2026-10-12",
+  "2026-11-02","2026-11-16","2026-12-08","2026-12-25"
+]);
+
+const PLANTILLA_TURNOS_XLSX_BASE64 = "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";
+
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarValorHoraVista();
+  document.getElementById("salario").addEventListener("input", () => {
+    actualizarValorHoraVista();
+    pintarResumen(resultadoActual || []);
+  });
+  ["auxTransporte","porcSalud","porcPension","diasPago"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", () => pintarResumen(resultadoActual || []));
+  });
+  generarCalendario();
+
+  const tbody = document.querySelector("#tablaCalendario tbody");
+  tbody.addEventListener("change", (e) => {
+    if (!e.target.closest("tr")) return;
+    actualizarEstiloFila(e.target.closest("tr"));
+  });
+
+  const archivo = document.getElementById("archivoTurnos");
+  if (archivo) archivo.addEventListener("change", importarArchivoTurnos);
+});
+
+function normalizarTexto(txt){
+  return String(txt || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}
+
+function numeroDesdeTexto(valor){
+  if (valor === null || valor === undefined) return 0;
+  let s = String(valor).trim();
+  if (!s) return 0;
+  s = s.replace(/\$/g, "").replace(/\s/g, "");
+  if (s.includes(",") && s.includes(".")) {
+    s = s.replace(/\./g, "").replace(",", ".");
+  } else if (s.includes(",")) {
+    s = s.replace(",", ".");
+  }
+  return Number(s) || 0;
+}
+
+function obtenerValorHora(){
+  const salario = numeroDesdeTexto(document.getElementById("salario").value);
+  const divisor = 220;
+  return salario / divisor;
+}
+
+function actualizarValorHoraVista(){
+  const vh = obtenerValorHora();
+  const texto = isFinite(vh) ? formatoMoneda(vh, true) : "";
+  const el = document.getElementById("valorHoraTexto");
+  if (el) el.textContent = texto ? `Valor hora: ${texto}` : "";
+  const input = document.getElementById("valorHoraVista");
+  if (input) input.value = texto;
+}
+
+function formatoMoneda(valor, decimales=false){
+  const n = Number(valor) || 0;
+  if (decimales) {
+    return "$" + n.toLocaleString("es-CO", {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  return "$" + Math.round(n).toLocaleString("es-CO");
+}
+
+function formatoHoras(h){
+  return (Math.round((Number(h) || 0) * 100) / 100).toFixed(2).replace(".", ",");
+}
+
+function pad2(n){ return String(n).padStart(2, "0"); }
+
+function formatoFechaHora(d){
+  return `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+
+function fechaKey(d){
+  return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+}
+
+function soloFecha(d){
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function crearFechaConHora(base, hh, mm){
+  return new Date(base.getFullYear(), base.getMonth(), base.getDate(), hh, mm, 0, 0);
+}
+
+function parsearFecha(texto){
+  if (texto instanceof Date) return soloFecha(texto);
+  const raw = normalizarTexto(texto).toLowerCase();
+  if (!raw) return null;
+
+  // Formato nativo de input type=date: yyyy-mm-dd
+  let m = raw.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+  if (m) {
+    const yy = Number(m[1]);
+    const mm = Number(m[2]);
+    const dd = Number(m[3]);
+    const d = new Date(yy, mm - 1, dd);
+    if (d.getFullYear() === yy && d.getMonth() === mm - 1 && d.getDate() === dd) return d;
+    return null;
+  }
+
+  // Serial de Excel, por ejemplo 46204.
+  if (/^\d{4,6}(\.\d+)?$/.test(raw)) {
+    const serial = Number(raw);
+    const base = new Date(Date.UTC(1899, 11, 30));
+    const dUtc = new Date(base.getTime() + serial * 24 * 60 * 60 * 1000);
+    const d = new Date(dUtc.getUTCFullYear(), dUtc.getUTCMonth(), dUtc.getUTCDate());
+    if (!isNaN(d)) return d;
+  }
+
+  const meses = {
+    "ene":1,"enero":1,
+    "feb":2,"febrero":2,
+    "mar":3,"marzo":3,
+    "abr":4,"abril":4,
+    "may":5,"mayo":5,
+    "jun":6,"junio":6,
+    "jul":7,"julio":7,
+    "ago":8,"agosto":8,
+    "sep":9,"sept":9,"septiembre":9,
+    "oct":10,"octubre":10,
+    "nov":11,"noviembre":11,
+    "dic":12,"diciembre":12
+  };
+
+  m = raw.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{2,4})$/);
+  if (m) {
+    let dd = Number(m[1]);
+    let mm = Number(m[2]);
+    let yy = Number(m[3]);
+    if (yy < 100) yy += 2000;
+    const d = new Date(yy, mm - 1, dd);
+    if (d.getFullYear() === yy && d.getMonth() === mm - 1 && d.getDate() === dd) return d;
+    return null;
+  }
+
+  m = raw.match(/^(\d{1,2})[\/\-\. ]([a-z]+)[\/\-\. ](\d{2,4})$/);
+  if (m) {
+    let dd = Number(m[1]);
+    let mm = meses[m[2]];
+    let yy = Number(m[3]);
+    if (!mm) return null;
+    if (yy < 100) yy += 2000;
+    const d = new Date(yy, mm - 1, dd);
+    if (d.getFullYear() === yy && d.getMonth() === mm - 1 && d.getDate() === dd) return d;
+    return null;
+  }
+
+  return null;
+}
+
+function parsearHora(texto){
+  let s = normalizarTexto(texto).toLowerCase();
+  s = s.replace(/\s+/g, "");
+  let meridiano = null;
+  if (s.endsWith("am")) { meridiano = "am"; s = s.slice(0, -2); }
+  if (s.endsWith("pm")) { meridiano = "pm"; s = s.slice(0, -2); }
+
+  const m = s.match(/^(\d{1,2})(?::?(\d{2}))?$/);
+  if (!m) return null;
+
+  let hh = Number(m[1]);
+  let mm = m[2] ? Number(m[2]) : 0;
+  if (mm < 0 || mm > 59) return null;
+
+  if (meridiano) {
+    if (hh < 1 || hh > 12) return null;
+    if (meridiano === "am") {
+      if (hh === 12) hh = 0;
+    } else {
+      if (hh !== 12) hh += 12;
+    }
+  }
+
+  if (hh < 0 || hh > 23) return null;
+  return {hh, mm};
+}
+
+function parsearTurno(textoTurno){
+  const original = String(textoTurno || "").trim();
+  const t = normalizarTexto(original).toUpperCase();
+
+  if (!t) return {tipo:"vacio"};
+  if (t.includes("DESCANSO") || t === "D") return {tipo:"descanso"};
+
+  // Mapeo explícito de los horarios del selector.
+  // Esto evita que textos como "12H 18:00 - 06:00" se lean mal tomando "12H" como una hora.
+  const horariosExactos = {
+    "M": {inicio:{hh:6,mm:0}, fin:{hh:14,mm:0}},
+    "T": {inicio:{hh:14,mm:0}, fin:{hh:22,mm:0}},
+    "N": {inicio:{hh:22,mm:0}, fin:{hh:6,mm:0}},
+    "06:00 - 14:00": {inicio:{hh:6,mm:0}, fin:{hh:14,mm:0}},
+    "14:00 - 22:00": {inicio:{hh:14,mm:0}, fin:{hh:22,mm:0}},
+    "22:00 - 06:00": {inicio:{hh:22,mm:0}, fin:{hh:6,mm:0}},
+    "4H 06:00 - 10:00": {inicio:{hh:6,mm:0}, fin:{hh:10,mm:0}},
+    "12H 10:00 - 22:00": {inicio:{hh:10,mm:0}, fin:{hh:22,mm:0}},
+    "12H 06:00 - 18:00": {inicio:{hh:6,mm:0}, fin:{hh:18,mm:0}},
+    "12H 18:00 - 06:00": {inicio:{hh:18,mm:0}, fin:{hh:6,mm:0}}
+  };
+
+  if (horariosExactos[t]) {
+    return {tipo:"turno", ...horariosExactos[t]};
+  }
+
+  // Para texto manual libre: "6pm a 6am", "10pm - 6am", "06:00 a 14:00".
+  // Primero quitamos prefijos de duración como 4H o 12H para no confundirlos con horas de inicio.
+  const limpio = original.replace(/\b\d{1,2}\s*H\b/ig, "").trim();
+  const horaRegex = /\b\d{1,2}(?::?\d{2})?\s*(?:am|pm)?\b/ig;
+  const matches = limpio.match(horaRegex);
+  if (matches && matches.length >= 2) {
+    const inicio = parsearHora(matches[0]);
+    const fin = parsearHora(matches[1]);
+    if (inicio && fin) return {tipo:"turno", inicio, fin};
+  }
+
+  return {tipo:"error", mensaje:`Turno no reconocido: "${original}"`};
+}
+
+function claseTurnoPorValor(valor){
+  const v = String(valor || "").trim();
+  if (!v) return "color-vacio";
+  if (v === "DESCANSO") return "color-descanso";
+  if (v === "06:00 - 14:00") return "color-m";
+  if (v === "14:00 - 22:00") return "color-t";
+  if (v === "22:00 - 06:00") return "color-n";
+  if (v === "4H 06:00 - 10:00") return "color-4h";
+  if (v === "12H 06:00 - 18:00") return "color-12h-dia";
+  if (v === "12H 10:00 - 22:00") return "color-12h-tarde";
+  if (v === "12H 18:00 - 06:00") return "color-12h-noche";
+  return "color-vacio";
+}
+
+function actualizarEstiloFila(tr){
+  if (!tr) return;
+  const festivoChk = tr.querySelector('.festivo-dia');
+  const turnoSelect = tr.querySelector('.turno-dia');
+
+  tr.classList.toggle('is-domingo-festivo', Boolean(festivoChk && festivoChk.checked));
+
+  if (turnoSelect) {
+    turnoSelect.classList.remove(
+      'color-vacio','color-descanso','color-m','color-t','color-n',
+      'color-4h','color-12h-dia','color-12h-tarde','color-12h-noche'
+    );
+    turnoSelect.classList.add(claseTurnoPorValor(turnoSelect.value));
+  }
+}
+
+function obtenerEstadoCalendarioActual(){
+  const estado = new Map();
+
+  document.querySelectorAll("#tablaCalendario tbody tr").forEach(tr => {
+    const fechaTxt = tr.children[2]?.textContent.trim() || "";
+    const fecha = parsearFecha(fechaTxt);
+    if (!fecha) return;
+
+    estado.set(fechaKey(fecha), {
+      turno: tr.querySelector(".turno-dia")?.value || "",
+      festivo: Boolean(tr.querySelector(".festivo-dia")?.checked)
+    });
+  });
+
+  return estado;
+}
+
+function generarCalendario(){
+  const inicio = parsearFecha(document.getElementById("fechaInicioTurno").value);
+  const fin = parsearFecha(document.getElementById("fechaFinTurno").value);
+  const tbody = document.querySelector("#tablaCalendario tbody");
+
+  if (!inicio || !fin) {
+    mostrarErrores(["Ingrese fechas válidas en los campos Desde y Hasta."]);
+    return;
+  }
+
+  if (fin < inicio) {
+    mostrarErrores(["La fecha fin no puede ser menor que la fecha inicio."]);
+    return;
+  }
+
+  // Guarda lo que ya se había seleccionado antes de reconstruir la lista.
+  // Así, si se amplía el rango hacia atrás o hacia adelante, lo ya digitado permanece.
+  const estadoPrevio = obtenerEstadoCalendarioActual();
+
+  tbody.innerHTML = "";
+
+  const NOMBRES_DIA = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const TURNOS_OPCIONES = [
+  ["DESCANSO", "DESCANSO"],
+  ["06:00 - 14:00", "06:00 - 14:00"],
+  ["14:00 - 22:00", "14:00 - 22:00"],
+  ["22:00 - 06:00", "22:00 - 06:00"],
+  ["4H 06:00 - 10:00", "4H 06:00 - 10:00"],
+  ["12H 10:00 - 22:00", "12H 10:00 - 22:00"],
+  ["12H 06:00 - 18:00", "12H 06:00 - 18:00"],
+  ["12H 18:00 - 06:00", "12H 18:00 - 06:00"]
+];
+
+  let fila = 1;
+  for (let fecha = new Date(inicio); fecha <= fin; fecha = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate() + 1)) {
+    const diaSemana = fecha.getDay();
+    const esDomingo = diaSemana === 0;
+    const key = fechaKey(fecha);
+    const esFestivoPrecargado = FESTIVOS_PRE_CARGADOS.has(key);
+    const previo = estadoPrevio.get(key);
+    const fechaMostrar = `${pad2(fecha.getDate())}/${pad2(fecha.getMonth() + 1)}/${fecha.getFullYear()}`;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${fila}</td>
+      <td>${NOMBRES_DIA[diaSemana]}</td>
+      <td>${fechaMostrar}</td>
+      <td class="number">
+        <input
+          type="checkbox"
+          class="festivo-dia"
+          aria-label="Marcar ${fechaMostrar} como dominical o festivo"
+          ${(previo ? (esDomingo || previo.festivo) : (esDomingo || esFestivoPrecargado)) ? "checked" : ""}
+          ${esDomingo ? "disabled title='Domingo automático'" : (esFestivoPrecargado && !previo ? "title='Festivo precargado, editable'" : "")}
+        >
+      </td>
+      <td>
+        <select class="turno-dia" aria-label="Horario del ${fechaMostrar}">
+          <option value="">Seleccione...</option>
+          ${TURNOS_OPCIONES.map(([value,label]) => `<option value="${value}">${label}</option>`).join("")}
+        </select>
+      </td>
+    `;
+    tbody.appendChild(tr);
+
+    if (previo?.turno && Array.from(tr.querySelector(".turno-dia").options).some(o => o.value === previo.turno)) {
+      tr.querySelector(".turno-dia").value = previo.turno;
+    }
+
+    actualizarEstiloFila(tr);
+    fila++;
+  }
+
+  limpiarResultado();
+}
+
+function limpiarCalendario(){
+  document.querySelector("#tablaCalendario tbody").innerHTML = "";
+  limpiarResultado();
+}
+
+function escapeHtml(s){
+  return String(s || "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function obtenerFestivos(){
+  const set = new Set();
+  const errores = [];
+
+  document.querySelectorAll("#tablaCalendario tbody tr").forEach((tr, idx) => {
+    const celdas = tr.querySelectorAll("td");
+    const fechaTxt = celdas[2]?.textContent.trim() || "";
+    const festivoChk = tr.querySelector(".festivo-dia");
+    if (!festivoChk?.checked) return;
+
+    const fecha = parsearFecha(fechaTxt);
+    if (!fecha) errores.push(`Fila ${idx + 1}: fecha no reconocida "${fechaTxt}".`);
+    else set.add(fechaKey(fecha));
+  });
+
+  return {set, errores};
+}
+
+function obtenerFactores(){
+  return {
+    [CONCEPTOS.RN]: numeroDesdeTexto(document.getElementById("pRN").value),
+    [CONCEPTOS.RDF]: numeroDesdeTexto(document.getElementById("pRDF").value),
+    [CONCEPTOS.RNF]: numeroDesdeTexto(document.getElementById("pRNF").value),
+    [CONCEPTOS.HED]: numeroDesdeTexto(document.getElementById("pHED").value),
+    [CONCEPTOS.HEN]: numeroDesdeTexto(document.getElementById("pHEN").value),
+    [CONCEPTOS.HEDF]: numeroDesdeTexto(document.getElementById("pHEDF").value),
+    [CONCEPTOS.HENF]: numeroDesdeTexto(document.getElementById("pHENF").value)
+  };
+}
+
+function leerTurnos(){
+  const filas = Array.from(document.querySelectorAll("#tablaCalendario tbody tr"));
+  const errores = [];
+  const rows = [];
+
+  filas.forEach((tr, idx) => {
+    const celdas = tr.querySelectorAll("td");
+    const dia = celdas[1]?.textContent.trim() || "";
+    const fechaTxt = celdas[2]?.textContent.trim() || "";
+    const turnoTxtOriginal = tr.querySelector(".turno-dia")?.value.trim() || "";
+
+    let turnoTxt = turnoTxtOriginal;
+
+    if (!turnoTxt) {
+      errores.push(`Fila ${idx + 1} (${fechaTxt || "sin fecha"}): seleccione un horario o DESCANSO.`);
+      return;
+    }
+
+    const fecha = parsearFecha(fechaTxt);
+    if (!fecha) {
+      errores.push(`Fila ${idx + 1}: fecha no reconocida "${fechaTxt}".`);
+      return;
+    }
+
+    const turno = parsearTurno(turnoTxt);
+    if (turno.tipo === "error") {
+      errores.push(`Fila ${idx + 1}: ${turno.mensaje}.`);
+      return;
+    }
+
+    if (turno.tipo === "descanso") {
+      rows.push({tipo:"descanso", dia, fecha, turnoTxt});
+      return;
+    }
+
+    if (turno.tipo === "vacio") return;
+
+    let inicio = crearFechaConHora(fecha, turno.inicio.hh, turno.inicio.mm);
+    let fin = crearFechaConHora(fecha, turno.fin.hh, turno.fin.mm);
+    if (fin <= inicio) fin = new Date(fin.getTime() + 24 * MS_HORA);
+
+    rows.push({tipo:"turno", dia, fecha, turnoTxt, inicio, fin});
+  });
+
+  return {rows, errores};
+}
+
+function tiempoMinutosDelDia(d){
+  return d.getHours() * 60 + d.getMinutes();
+}
+
+function parseHoraCampo(id){
+  const h = parsearHora(document.getElementById(id).value);
+  return h ? h.hh * 60 + h.mm : null;
+}
+
+function esNocturna(d, inicioNoct, finNoct){
+  const min = tiempoMinutosDelDia(d);
+  if (inicioNoct > finNoct) {
+    return min >= inicioNoct || min < finNoct;
+  }
+  return min >= inicioNoct && min < finNoct;
+}
+
+function esFestivoODomingo(d, festivos){
+  return d.getDay() === 0 || festivos.has(fechaKey(d));
+}
+
+function siguienteMedianoche(d){
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, 0, 0, 0, 0);
+}
+
+function siguienteHoraDelDia(d, minutosDia){
+  const hh = Math.floor(minutosDia / 60);
+  const mm = minutosDia % 60;
+  let x = new Date(d.getFullYear(), d.getMonth(), d.getDate(), hh, mm, 0, 0);
+  if (x <= d) x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, hh, mm, 0, 0);
+  return x;
+}
+
+function siguienteLunes(d){
+  const base = soloFecha(d);
+  const dia = base.getDay(); // 0 domingo, 1 lunes
+  const diasHastaLunes = dia === 0 ? 1 : 8 - dia;
+  return new Date(base.getFullYear(), base.getMonth(), base.getDate() + diasHastaLunes, 0, 0, 0, 0);
+}
+
+function semanaKey(d){
+  const base = soloFecha(d);
+  const day = base.getDay();
+  const diff = day === 0 ? -6 : 1 - day; // lunes de la semana
+  const lunes = new Date(base.getFullYear(), base.getMonth(), base.getDate() + diff);
+  return fechaKey(lunes);
+}
+
+function clasificarSegmento({extra, nocturna, festivo}){
+  if (extra) {
+    if (festivo && nocturna) return CONCEPTOS.HENF;
+    if (festivo && !nocturna) return CONCEPTOS.HEDF;
+    if (!festivo && nocturna) return CONCEPTOS.HEN;
+    return CONCEPTOS.HED;
+  }
+
+  if (festivo && nocturna) return CONCEPTOS.RNF;
+  if (festivo && !nocturna) return CONCEPTOS.RDF;
+  if (!festivo && nocturna) return CONCEPTOS.RN;
+
+  // Jornada ordinaria diurna en día normal: no genera recargo ni registro.
+  return "";
+}
+
+function calcular(){
+  console.log("calcular() llamado");
+  limpiarMensajes();
+  const errores = [];
+
+  const salario = numeroDesdeTexto(document.getElementById("salario").value);
+  const divisor = 220;
+  const valorHora = obtenerValorHora();
+  const proyecto = document.getElementById("proyecto")?.value.trim() || "";
+  const descripcion = document.getElementById("descripcion")?.value.trim() || "";
+
+  if (!salario) errores.push("El salario básico mensual está vacío o no es válido.");
+
+  const inicioNoct = parseHoraCampo("inicioNocturnaInterno");
+  const finNoct = parseHoraCampo("finNocturnaInterno");
+  if (inicioNoct === null || finNoct === null) errores.push("La jornada nocturna no es válida.");
+
+  const fechaCambio = parsearFecha(document.getElementById("fechaCambioInterno").value);
+  if (!fechaCambio) errores.push("La fecha de cambio legal no es válida.");
+
+  const limiteAntes = numeroDesdeTexto(document.getElementById("limiteAntesInterno").value);
+  const limiteDespues = numeroDesdeTexto(document.getElementById("limiteDespuesInterno").value);
+  if (!limiteAntes || !limiteDespues) errores.push("Los límites de horas no son válidos.");
+
+  const modo = document.getElementById("modoAcumulacionInterno").value;
+  const fest = obtenerFestivos();
+  errores.push(...fest.errores);
+
+  const leidos = leerTurnos();
+  errores.push(...leidos.errores);
+
+  if (errores.length) {
+    mostrarErrores(errores);
+    return;
+  }
+
+  const factores = obtenerFactores();
+  const segmentos = [];
+
+  let acumulado = 0;
+  let semanaActual = null;
+  let inicialAplicadoSemana = false;
+
+  const legalChangeDate = new Date(fechaCambio.getFullYear(), fechaCambio.getMonth(), fechaCambio.getDate(), 0, 0, 0, 0);
+
+  for (const row of leidos.rows) {
+    if (row.tipo === "descanso") {
+      if (modo === "bloque") acumulado = 0;
+      continue;
+    }
+
+    let cursor = new Date(row.inicio.getTime());
+    const finTurno = new Date(row.fin.getTime());
+
+    while (cursor < finTurno) {
+      if (modo === "semana") {
+        const wk = semanaKey(cursor);
+        if (semanaActual === null) {
+          semanaActual = wk;
+           acumulado = inicialAplicadoSemana ? acumulado : 0;
+          inicialAplicadoSemana = true;
+        } else if (wk !== semanaActual) {
+          semanaActual = wk;
+          acumulado = 0;
+        }
+      }
+
+      const limiteActual = cursor < legalChangeDate ? limiteAntes : limiteDespues;
+
+      const posibles = [
+        finTurno,
+        siguienteMedianoche(cursor),
+        siguienteHoraDelDia(cursor, inicioNoct),
+        siguienteHoraDelDia(cursor, finNoct),
+      ];
+
+      if (cursor < legalChangeDate && legalChangeDate < finTurno) {
+        posibles.push(legalChangeDate);
+      }
+
+      if (modo === "semana") {
+        posibles.push(siguienteLunes(cursor));
+      }
+
+      if (acumulado < limiteActual) {
+        const faltanHoras = limiteActual - acumulado;
+        const puntoExtra = new Date(cursor.getTime() + faltanHoras * MS_HORA);
+        if (puntoExtra > cursor && puntoExtra < finTurno) posibles.push(puntoExtra);
+      }
+
+      let siguiente = posibles
+        .filter(x => x > cursor)
+        .sort((a, b) => a - b)[0];
+
+      if (!siguiente || siguiente <= cursor) {
+        siguiente = new Date(cursor.getTime() + MS_HORA);
+        if (siguiente > finTurno) siguiente = finTurno;
+      }
+
+      const horas = (siguiente - cursor) / MS_HORA;
+      const extra = acumulado >= limiteActual - 1e-9;
+      const nocturna = esNocturna(cursor, inicioNoct, finNoct);
+      const festivo = esFestivoODomingo(cursor, fest.set);
+      const concepto = clasificarSegmento({extra, nocturna, festivo});
+
+      if (concepto) {
+        segmentos.push({
+          concepto,
+          horas,
+          inicio: new Date(cursor.getTime()),
+          fin: new Date(siguiente.getTime()),
+          proyecto,
+          descripcion,
+          valor: horas * valorHora * (factores[concepto] ?? 0)
+        });
+      }
+
+      acumulado += horas;
+      cursor = siguiente;
+    }
+  }
+
+  const agrupados = agruparSegmentos(segmentos, valorHora, factores);
+  resultadoActual = agrupados;
+  pintarResultado(agrupados);
+  pintarResumen(agrupados);
+  mostrarOk(agrupados.length
+    ? `Cálculo finalizado. Registros generados: ${agrupados.length}.`
+    : "Cálculo finalizado. Los turnos seleccionados no generan recargos ni horas extra.");
+}
+
+function agruparSegmentos(segmentos, valorHora, factores){
+  const out = [];
+  for (const seg of segmentos) {
+    const last = out[out.length - 1];
+    const puedeAgrupar =
+      last &&
+      last.concepto === seg.concepto &&
+      last.proyecto === seg.proyecto &&
+      last.descripcion === seg.descripcion &&
+      last.fin.getTime() === seg.inicio.getTime();
+
+    if (puedeAgrupar) {
+      last.horas += seg.horas;
+      last.fin = new Date(seg.fin.getTime());
+      last.valor += seg.valor;
+    } else {
+      out.push({...seg});
+    }
+  }
+  return out;
+}
+
+function pintarResultado(rows){
+  const tbody = document.querySelector("#tablaResultado tbody");
+  tbody.innerHTML = "";
+
+  for (const r of rows) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${escapeHtml(r.concepto)}</td>
+      <td class="number">${formatoHoras(r.horas)}</td>
+      <td>${formatoFechaHora(r.inicio)}</td>
+      <td>${formatoFechaHora(r.fin)}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById("contadorResultado").textContent = `${rows.length} registros | ${formatoHoras(totalHorasResultado(rows))} horas`;
+}
+
+function normalizarClave(txt){
+  return normalizarTexto(txt).toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function normalizarHorarioImportado(valor){
+  const original = String(valor ?? "").trim();
+  const t = normalizarTexto(original).toUpperCase();
+  const clave = t.replace(/[^A-Z0-9]/g, "");
+
+  if (!t) return "";
+  if (clave === "D" || clave === "DESC" || clave === "DESCANSO" || t.includes("DESCANSO")) return "DESCANSO";
+  if (clave === "M" || clave === "MANANA" || clave === "MAÑANA") return "06:00 - 14:00";
+  if (clave === "T" || clave === "TARDE") return "14:00 - 22:00";
+  if (clave === "N" || clave === "NOCHE") return "22:00 - 06:00";
+
+  // Códigos de la plantilla simple del usuario.
+  // 12HN = 12 horas nocturnas, equivalente a 18:00 - 06:00.
+  if (["12HN","12HNOCHE","12HNOCTURNO","12HNOCTURNA","12N"].includes(clave)) return "12H 18:00 - 06:00";
+  if (["12HD","12HDIA","12HDIURNO","12HDIURNA","12M"].includes(clave)) return "12H 06:00 - 18:00";
+  if (["12HT","12HTARDE"].includes(clave)) return "12H 10:00 - 22:00";
+  if (["4H","4HM","4HD","4HDIA","4HDIURNO"].includes(clave)) return "4H 06:00 - 10:00";
+
+  const exacto = [
+    "06:00 - 14:00",
+    "14:00 - 22:00",
+    "22:00 - 06:00",
+    "4H 06:00 - 10:00",
+    "12H 10:00 - 22:00",
+    "12H 06:00 - 18:00",
+    "12H 18:00 - 06:00"
+  ].find(x => normalizarTexto(x).toUpperCase().replace(/[^A-Z0-9]/g, "") === clave);
+  if (exacto) return exacto;
+
+  const turno = parsearTurno(original);
+  if (turno.tipo !== "turno") return original;
+
+  const ini = `${pad2(turno.inicio.hh)}:${pad2(turno.inicio.mm)}`;
+  const fin = `${pad2(turno.fin.hh)}:${pad2(turno.fin.mm)}`;
+  const mapa = {
+    "06:00-14:00": "06:00 - 14:00",
+    "14:00-22:00": "14:00 - 22:00",
+    "22:00-06:00": "22:00 - 06:00",
+    "06:00-10:00": "4H 06:00 - 10:00",
+    "10:00-22:00": "12H 10:00 - 22:00",
+    "06:00-18:00": "12H 06:00 - 18:00",
+    "18:00-06:00": "12H 18:00 - 06:00"
+  };
+  return mapa[`${ini}-${fin}`] || original;
+}
+
+function valorBooleano(valor){
+  const s = normalizarClave(valor);
+  return ["si","s","true","1","x","festivo","domingo","domfestivo","yes"].includes(s);
+}
+
+function detectarColumnasTurnos(rows){
+  const maxCols = Math.max(...rows.map(r => r.length), 0);
+  let headerIndex = rows.findIndex(r => {
+    const claves = r.map(normalizarClave);
+    return claves.some(c => c.includes("fecha")) && claves.some(c => c.includes("horario") || c.includes("turno"));
+  });
+
+  if (headerIndex >= 0) {
+    const header = rows[headerIndex].map(normalizarClave);
+    return {
+      headerIndex,
+      dataStart: headerIndex + 1,
+      fechaIdx: header.findIndex(c => c.includes("fecha")),
+      horarioIdx: header.findIndex(c => c.includes("horario") || c.includes("turno")),
+      festivoIdx: header.findIndex(c => c.includes("festivo") || c.includes("domingo") || c.includes("dom")),
+      diaIdx: header.findIndex(c => c === "dia" || c.includes("dia"))
+    };
+  }
+
+  const dateScores = Array(maxCols).fill(0);
+  const scheduleScores = Array(maxCols).fill(0);
+  const festScores = Array(maxCols).fill(0);
+
+  rows.slice(0, 15).forEach(r => {
+    for (let i = 0; i < maxCols; i++) {
+      const value = r[i];
+      const s = String(value ?? "").trim();
+      if (!s) continue;
+
+      if (parsearFecha(s)) dateScores[i]++;
+
+      const h = normalizarHorarioImportado(s);
+      const turno = parsearTurno(h);
+      if (!parsearFecha(s) && h && ["turno","descanso"].includes(turno.tipo)) scheduleScores[i]++;
+
+      if (["si","no","s","n","x","true","false","1","0"].includes(normalizarClave(s))) festScores[i]++;
+    }
+  });
+
+  const fechaIdx = dateScores.indexOf(Math.max(...dateScores));
+  const horarioIdx = scheduleScores.indexOf(Math.max(...scheduleScores));
+  const festivoIdx = Math.max(...festScores) > 0 ? festScores.indexOf(Math.max(...festScores)) : -1;
+
+  return {headerIndex:-1, dataStart:0, fechaIdx, horarioIdx, festivoIdx, diaIdx:-1};
+}
+
+function matrizARegistrosTurnos(matriz){
+  const rows = matriz
+    .filter(r => Array.isArray(r))
+    .map(r => r.map(c => String(c ?? "").trim()))
+    .filter(r => r.some(c => c !== ""));
+
+  if (!rows.length) return [];
+
+  const cols = detectarColumnasTurnos(rows);
+
+  if (cols.fechaIdx < 0 || cols.horarioIdx < 0 || cols.fechaIdx === cols.horarioIdx) {
+    throw new Error("No pude detectar las columnas. Use el formato: columna A = Fecha y columna B = Horario.");
+  }
+
+  const registros = [];
+  const errores = [];
+
+  for (let i = cols.dataStart; i < rows.length; i++) {
+    const r = rows[i];
+    const fechaRaw = r[cols.fechaIdx];
+    const horarioRaw = r[cols.horarioIdx];
+
+    if (!fechaRaw && !horarioRaw) continue;
+
+    const fecha = parsearFecha(fechaRaw);
+    const horario = normalizarHorarioImportado(horarioRaw);
+    const festivo = cols.festivoIdx >= 0 ? valorBooleano(r[cols.festivoIdx]) : false;
+
+    if (!fecha) {
+      errores.push(`Fila ${i + 1}: fecha no válida "${fechaRaw}".`);
+      continue;
+    }
+
+    const turno = parsearTurno(horario);
+    if (!horario || turno.tipo === "error" || turno.tipo === "vacio") {
+      errores.push(`Fila ${i + 1}: horario no válido "${horarioRaw}".`);
+      continue;
+    }
+
+    registros.push({fecha, fechaKey: fechaKey(fecha), horario, festivo});
+  }
+
+  if (!registros.length) {
+    throw new Error(
+      errores.length
+        ? errores.slice(0, 6).join(" | ")
+        : "El archivo no contiene registros válidos. Use el formato: columna A = Fecha y columna B = Horario."
+    );
+  }
+
+  return {registros, errores};
+}
+
+function parseCsv(texto){
+  const filas = [];
+  let fila = [], campo = "", enComillas = false;
+
+  for (let i = 0; i < texto.length; i++) {
+    const ch = texto[i];
+    const next = texto[i + 1];
+
+    if (ch === '"' && enComillas && next === '"') {
+      campo += '"';
+      i++;
+    } else if (ch === '"') {
+      enComillas = !enComillas;
+    } else if ((ch === ";" || ch === "," || ch === "\t") && !enComillas) {
+      fila.push(campo.trim());
+      campo = "";
+    } else if ((ch === "\n" || ch === "\r") && !enComillas) {
+      if (ch === "\r" && next === "\n") i++;
+      fila.push(campo.trim());
+      if (fila.some(x => x !== "")) filas.push(fila);
+      fila = [];
+      campo = "";
+    } else {
+      campo += ch;
+    }
+  }
+
+  fila.push(campo.trim());
+  if (fila.some(x => x !== "")) filas.push(fila);
+  return filas;
+}
+
+function readUInt16(bytes, offset){ return bytes[offset] | (bytes[offset + 1] << 8); }
+function readUInt32(bytes, offset){ return (bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16) | (bytes[offset + 3] << 24)) >>> 0; }
+
+async function descomprimirZipEntry(entry){
+  const data = entry.data;
+  if (entry.method === 0) return data;
+  if (entry.method !== 8) throw new Error(`Método ZIP no soportado: ${entry.method}.`);
+  if (!("DecompressionStream" in window)) {
+    throw new Error("Este navegador no soporta lectura local de XLSX. Use Chrome/Edge actualizado o cargue CSV.");
+  }
+  const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+  const buffer = await new Response(stream).arrayBuffer();
+  return new Uint8Array(buffer);
+}
+
+function leerEntradasZip(bytes){
+  let eocd = -1;
+  for (let i = bytes.length - 22; i >= 0; i--) {
+    if (readUInt32(bytes, i) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) throw new Error("Archivo XLSX no válido.");
+
+  const centralOffset = readUInt32(bytes, eocd + 16);
+  const total = readUInt16(bytes, eocd + 10);
+  const entries = new Map();
+  let offset = centralOffset;
+  const decoder = new TextDecoder("utf-8");
+
+  for (let i = 0; i < total; i++) {
+    if (readUInt32(bytes, offset) !== 0x02014b50) break;
+    const method = readUInt16(bytes, offset + 10);
+    const compressedSize = readUInt32(bytes, offset + 20);
+    const nameLen = readUInt16(bytes, offset + 28);
+    const extraLen = readUInt16(bytes, offset + 30);
+    const commentLen = readUInt16(bytes, offset + 32);
+    const localOffset = readUInt32(bytes, offset + 42);
+    const name = decoder.decode(bytes.slice(offset + 46, offset + 46 + nameLen));
+
+    const localNameLen = readUInt16(bytes, localOffset + 26);
+    const localExtraLen = readUInt16(bytes, localOffset + 28);
+    const dataStart = localOffset + 30 + localNameLen + localExtraLen;
+    const data = bytes.slice(dataStart, dataStart + compressedSize);
+
+    entries.set(name, {name, method, data});
+    offset += 46 + nameLen + extraLen + commentLen;
+  }
+
+  return entries;
+}
+
+async function leerTextoZip(entries, name){
+  const entry = entries.get(name);
+  if (!entry) return "";
+  const bytes = await descomprimirZipEntry(entry);
+  return new TextDecoder("utf-8").decode(bytes);
+}
+
+function textoXmlNodo(node){
+  if (!node) return "";
+  return Array.from(node.getElementsByTagName("t")).map(x => x.textContent || "").join("");
+}
+
+function celdaRefACol(ref){
+  const m = String(ref || "").match(/[A-Z]+/i);
+  if (!m) return 0;
+  return m[0].toUpperCase().split("").reduce((acc, ch) => acc * 26 + ch.charCodeAt(0) - 64, 0) - 1;
+}
+
+async function parseXlsx(arrayBuffer){
+  const bytes = new Uint8Array(arrayBuffer);
+  const entries = leerEntradasZip(bytes);
+
+  let sheetPath = "xl/worksheets/sheet1.xml";
+  const wbXml = await leerTextoZip(entries, "xl/workbook.xml");
+  const relsXml = await leerTextoZip(entries, "xl/_rels/workbook.xml.rels");
+
+  if (wbXml && relsXml) {
+    const parser = new DOMParser();
+    const wb = parser.parseFromString(wbXml, "application/xml");
+    const firstSheet = wb.getElementsByTagName("sheet")[0];
+    const rid = firstSheet?.getAttribute("r:id");
+    if (rid) {
+      const rels = parser.parseFromString(relsXml, "application/xml");
+      const rel = Array.from(rels.getElementsByTagName("Relationship")).find(x => x.getAttribute("Id") === rid);
+      const target = rel?.getAttribute("Target");
+      if (target) sheetPath = "xl/" + target.replace(/^\/?xl\//, "");
+    }
+  }
+
+  const sharedXml = await leerTextoZip(entries, "xl/sharedStrings.xml");
+  const shared = [];
+  if (sharedXml) {
+    const doc = new DOMParser().parseFromString(sharedXml, "application/xml");
+    Array.from(doc.getElementsByTagName("si")).forEach(si => shared.push(textoXmlNodo(si)));
+  }
+
+  const sheetXml = await leerTextoZip(entries, sheetPath);
+  if (!sheetXml) throw new Error("No se encontró la primera hoja del Excel.");
+
+  const doc = new DOMParser().parseFromString(sheetXml, "application/xml");
+  const out = [];
+
+  Array.from(doc.getElementsByTagName("row")).forEach(row => {
+    const arr = [];
+    Array.from(row.getElementsByTagName("c")).forEach(c => {
+      const col = celdaRefACol(c.getAttribute("r"));
+      const t = c.getAttribute("t");
+      let value = "";
+      if (t === "inlineStr") {
+        value = textoXmlNodo(c);
+      } else {
+        const v = c.getElementsByTagName("v")[0]?.textContent ?? "";
+        value = t === "s" ? (shared[Number(v)] ?? "") : v;
+      }
+      arr[col] = value;
+    });
+    out.push(arr);
+  });
+
+  return out;
+}
+
+function formatoFechaInput(d){
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
+function aplicarRegistrosImportados(registros){
+  if (!registros.length) throw new Error("El archivo no contiene registros válidos.");
+
+  const fechas = registros.map(r => r.fecha).sort((a,b) => a - b);
+  document.getElementById("fechaInicioTurno").value = formatoFechaInput(fechas[0]);
+  document.getElementById("fechaFinTurno").value = formatoFechaInput(fechas[fechas.length - 1]);
+
+  generarCalendario();
+
+  // Si el archivo no trae todos los días, los faltantes quedan como DESCANSO para cerrar bloques.
+  document.querySelectorAll("#tablaCalendario tbody tr .turno-dia").forEach(sel => {
+    sel.value = "DESCANSO";
+    actualizarEstiloFila(sel.closest("tr"));
+  });
+
+  let aplicados = 0;
+  const noReconocidos = [];
+
+  registros.forEach(r => {
+    const fechaMostrar = `${pad2(r.fecha.getDate())}/${pad2(r.fecha.getMonth()+1)}/${r.fecha.getFullYear()}`;
+    const fila = Array.from(document.querySelectorAll("#tablaCalendario tbody tr"))
+      .find(tr => tr.children[2]?.textContent.trim() === fechaMostrar);
+    if (!fila) return;
+
+    const select = fila.querySelector(".turno-dia");
+    const existe = Array.from(select.options).some(o => o.value === r.horario);
+    if (!existe) {
+      noReconocidos.push(`${fechaMostrar}: ${r.horario}`);
+      return;
+    }
+
+    select.value = r.horario;
+
+    const chk = fila.querySelector(".festivo-dia");
+    if (chk && !chk.disabled && r.festivo) chk.checked = true;
+
+    actualizarEstiloFila(fila);
+    aplicados++;
+  });
+
+  if (noReconocidos.length) {
+    throw new Error("Horarios no reconocidos: " + noReconocidos.slice(0, 8).join(" | "));
+  }
+
+  calcular();
+  mostrarOk(`Archivo importado correctamente. Registros aplicados: ${aplicados}. Días no incluidos: DESCANSO.`);
+}
+
+async function importarArchivoTurnos(event){
+  limpiarMensajes();
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  try {
+    mostrarOk("Leyendo archivo...");
+    let matriz;
+    const nombre = file.name.toLowerCase();
+
+    if (nombre.endsWith(".xlsx")) {
+      matriz = await parseXlsx(await file.arrayBuffer());
+    } else {
+      matriz = parseCsv(await file.text());
+    }
+
+    const {registros, errores} = matrizARegistrosTurnos(matriz);
+    aplicarRegistrosImportados(registros);
+
+    if (errores.length) {
+      mostrarErrores(["Archivo importado con observaciones:", ...errores.slice(0, 8)]);
+    }
+  } catch (err) {
+    mostrarErrores([`No se pudo importar el archivo: ${err.message || err}`]);
+  } finally {
+    event.target.value = "";
+  }
+}
+
+function descargarPlantillaTurnos(){
+  try {
+    const binario = atob(PLANTILLA_TURNOS_XLSX_BASE64);
+    const bytes = new Uint8Array(binario.length);
+
+    for (let i = 0; i < binario.length; i++) {
+      bytes[i] = binario.charCodeAt(i);
+    }
+
+    const blob = new Blob([bytes], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Libro2.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    mostrarOk("Plantilla Excel descargada.");
+  } catch (err) {
+    mostrarErrores(["No se pudo descargar la plantilla Excel."]);
+  }
+}
+
+function auxilioTransporteAplicable(salario){
+  const aux = numeroDesdeTexto(document.getElementById("auxTransporte")?.value || 0);
+  const smlmv = numeroDesdeTexto(document.getElementById("smlmvVigente")?.value || 0);
+  if (!aux || !smlmv || !salario) return 0;
+  return salario <= (2 * smlmv) ? aux : 0;
+}
+
+function totalHorasResultado(rows){
+  return rows.reduce((acc, r) => acc + (Number(r.horas) || 0), 0);
+}
+
+function formatoCantidadNomina(valor, tipo="horas"){
+  const n = Number(valor) || 0;
+  if (tipo === "dias") {
+    return Number.isInteger(n) ? String(n) : formatoHoras(n);
+  }
+  return formatoHoras(n);
+}
+
+function agregarFilaResumen(tbody, concepto, cant, pago, descuento, clase=""){
+  const tr = document.createElement("tr");
+  if (clase) tr.className = clase;
+  tr.innerHTML = `
+    <td>${escapeHtml(concepto)}</td>
+    <td class="number">${cant ?? ""}</td>
+    <td class="number">${pago ? formatoMoneda(pago) : ""}</td>
+    <td class="number">${descuento ? formatoMoneda(descuento) : ""}</td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function pintarResumen(rows){
+  const resumen = new Map();
+  let totalRecargos = 0;
+
+  for (const r of rows) {
+    if (!resumen.has(r.concepto)) resumen.set(r.concepto, {horas:0, valor:0});
+    resumen.get(r.concepto).horas += r.horas;
+    resumen.get(r.concepto).valor += r.valor;
+    totalRecargos += r.valor;
+  }
+
+  const salario = numeroDesdeTexto(document.getElementById("salario")?.value || 0);
+  const auxTransporte = auxilioTransporteAplicable(salario);
+  const diasPago = numeroDesdeTexto(document.getElementById("diasPago")?.value || 30) || 30;
+  const porcSalud = numeroDesdeTexto(document.getElementById("porcSalud")?.value || 0) / 100;
+  const porcPension = numeroDesdeTexto(document.getElementById("porcPension")?.value || 0) / 100;
+
+  const baseDeduccion = salario + totalRecargos;
+  const descuentoPension = baseDeduccion * porcPension;
+  const descuentoSalud = baseDeduccion * porcSalud;
+  const totalPago = salario + auxTransporte + totalRecargos;
+  const totalDescuento = descuentoPension + descuentoSalud;
+  const neto = totalPago - totalDescuento;
+
+  const tbody = document.querySelector("#tablaResumen tbody");
+  tbody.innerHTML = "";
+
+  [...resumen.entries()].forEach(([concepto, item]) => {
+    agregarFilaResumen(tbody, concepto, formatoCantidadNomina(item.horas), item.valor, 0);
+  });
+
+  agregarFilaResumen(tbody, auxTransporte > 0 ? "AUXILIO DE TRANSPORTE" : "AUXILIO DE TRANSPORTE (NO APLICA)", formatoCantidadNomina(diasPago, "dias"), auxTransporte, 0, "nomina-base");
+  agregarFilaResumen(tbody, "SUELDO ORDINARIO", formatoCantidadNomina(diasPago, "dias"), salario, 0, "nomina-base nomina-subtotal");
+  agregarFilaResumen(tbody, "OBLIGATORIO PENSION", "", 0, descuentoPension, "nomina-descuento");
+  agregarFilaResumen(tbody, "OBLIGATORIO SALUD", "", 0, descuentoSalud, "nomina-descuento");
+
+  document.getElementById("totalPagoResumen").textContent = formatoMoneda(totalPago);
+  document.getElementById("totalDescuentoResumen").textContent = formatoMoneda(totalDescuento);
+  document.getElementById("netoResumen").textContent = formatoMoneda(neto);
+}
+
+function limpiarResultado(){
+  resultadoActual = [];
+  document.querySelector("#tablaResultado tbody").innerHTML = "";
+  document.getElementById("contadorResultado").textContent = "0 registros";
+  pintarResumen([]);
+  limpiarMensajes();
+}
+
+function limpiarMensajes(){
+  const e = document.getElementById("mensajesError");
+  const o = document.getElementById("mensajesOk");
+  if (e) { e.style.display = "none"; e.textContent = ""; }
+  if (o) { o.style.display = "none"; o.textContent = ""; }
+}
+
+function mostrarErrores(lista){
+  const e = document.getElementById("mensajesError");
+  if (!e) return;
+  e.textContent = lista.join("\n");
+  e.style.display = "block";
+}
+
+function mostrarOk(txt){
+  const o = document.getElementById("mensajesOk");
+  if (!o) return;
+  o.textContent = txt;
+  o.style.display = "block";
+}
+
+function filasResultadoComoArray(){
+  return resultadoActual.map(r => ({
+    "NOMBRE CONCEPTO": r.concepto,
+    "No de HORAS": formatoHoras(r.horas),
+    "Fecha y hora de inicio de la HHEE": formatoFechaHora(r.inicio),
+    "Fecha y hora de finalización de la HHEE": formatoFechaHora(r.fin)
+  }));
+}
+
+function exportarCSV(){
+  if (!resultadoActual.length) {
+    alert("No hay resultado para exportar.");
+    return;
+  }
+
+  const headers = [
+    "NOMBRE CONCEPTO",
+    "No de HORAS",
+    "Fecha y hora de inicio de la HHEE",
+    "Fecha y hora de finalización de la HHEE"
+  ];
+
+  const rows = filasResultadoComoArray();
+  const csv = [
+    headers.join(";"),
+    ...rows.map(r => headers.map(h => csvCell(r[h])).join(";"))
+  ].join("\r\n");
+
+  const blob = new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "resultado_recargos.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function csvCell(value){
+  const s = String(value ?? "");
+  if (/[;"\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+async function copiarTabla(){
+  if (!resultadoActual.length) {
+    alert("No hay resultado para copiar.");
+    return;
+  }
+  const headers = [
+    "NOMBRE CONCEPTO",
+    "No de HORAS",
+    "Fecha y hora de inicio de la HHEE",
+    "Fecha y hora de finalización de la HHEE"
+  ];
+  const rows = filasResultadoComoArray();
+  const tsv = [
+    headers.join("\t"),
+    ...rows.map(r => headers.map(h => r[h]).join("\t"))
+  ].join("\n");
+
+  try {
+    await navigator.clipboard.writeText(tsv);
+    alert("Tabla copiada al portapapeles.");
+  } catch (err) {
+    const ta = document.createElement("textarea");
+    ta.value = tsv;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    alert("Tabla copiada al portapapeles.");
+  }
+}
+
+
+function alternarTema(){
+  const actual = document.documentElement.getAttribute("data-theme") || "light";
+  const nuevo = actual === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", nuevo);
+  localStorage.setItem("temaRecargos", nuevo);
+  const btn = document.getElementById("btnTema");
+  if (btn) btn.textContent = nuevo === "dark" ? "Modo claro" : "Modo oscuro";
+}
+
+function cargarTema(){
+  const guardado = localStorage.getItem("temaRecargos") || "light";
+  document.documentElement.setAttribute("data-theme", guardado);
+  const btn = document.getElementById("btnTema");
+  if (btn) btn.textContent = guardado === "dark" ? "Modo claro" : "Modo oscuro";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(cargarTema, 0);
+});
+
+</script>
+</body>
+</html>
