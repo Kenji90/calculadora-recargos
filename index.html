@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calculadora de Recargos y Horas Extra</title>
+  <title>Recargos y horas extra</title>
   <style>
     :root {
       --bg: #f7f5fb;
@@ -1158,72 +1158,3696 @@
       .action-secondary-box button { width: 100%; }
     }
 
+
+    /* ===== Versión visual limpia ===== */
+    html {
+      font-variant-numeric: tabular-nums;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 16% 0%, rgba(111,59,168,.10), transparent 26rem),
+        linear-gradient(180deg, var(--bg-soft), var(--bg));
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 560;
+      line-height: 1.35;
+    }
+
+    .app-header {
+      border-bottom-color: color-mix(in srgb, var(--line) 80%, transparent);
+      box-shadow: 0 10px 28px rgba(40, 26, 60, .06);
+    }
+
+    .brand-mark {
+      background: linear-gradient(145deg, var(--primary), var(--accent));
+      box-shadow: 0 10px 18px rgba(111,59,168,.16);
+    }
+
+    .card {
+      border-radius: 24px;
+      box-shadow: 0 12px 34px rgba(52, 35, 78, .075);
+    }
+
+    html[data-theme="dark"] .card {
+      box-shadow: 0 14px 36px rgba(0,0,0,.22);
+    }
+
+    .stepper {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 8px;
+      border-radius: 16px;
+      box-shadow: none;
+    }
+
+    .stepper a {
+      min-height: 38px;
+      border: 1px solid transparent;
+    }
+
+    .stepper a:hover {
+      border-color: var(--line);
+      transform: translateY(-1px);
+    }
+
+    .section-title-icon {
+      background: color-mix(in srgb, var(--primary-soft) 82%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.20);
+    }
+
+    .hour-pill.large {
+      min-height: 48px;
+      font-size: 15px;
+      justify-content: center;
+      border-radius: 16px;
+    }
+
+    .period-strip,
+    .import-panel {
+      box-shadow: none;
+      border-radius: 16px;
+    }
+
+    button {
+      box-shadow: none;
+    }
+
+    button.ok,
+    .calculate-main {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 12px 24px rgba(111,59,168,.16);
+    }
+
+    button.danger-soft {
+      color: var(--danger);
+      border-color: color-mix(in srgb, var(--danger) 35%, var(--line));
+    }
+
+    .dropzone {
+      border-style: dashed;
+      background: linear-gradient(180deg, var(--card-solid), color-mix(in srgb, var(--primary-soft) 36%, var(--card-solid)));
+    }
+
+    .dropzone-icon {
+      font-size: 16px;
+    }
+
+    #tablaCalendario,
+    #tablaResultado,
+    #tablaResumen {
+      min-width: 0;
+    }
+
+    th {
+      font-size: 10.5px;
+    }
+
+    td {
+      font-size: 12.8px;
+    }
+
+    #tablaCalendario select {
+      min-width: 210px;
+    }
+
+    .turno-dia.color-descanso {
+      background: #eef0f3;
+      color: #4b5563;
+      border-color: #d7dce3;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: #a7d889;
+      color: #19320f;
+      border-color: #82bf62;
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: #9bc7ed;
+      color: #122d45;
+      border-color: #6daee6;
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: #f4be75;
+      color: #4a2c06;
+      border-color: #e3a34e;
+    }
+
+    .summary-cards.visual-summary {
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 96px;
+      border-radius: 20px;
+      box-shadow: none;
+    }
+
+    .metric .value {
+      font-size: 20px;
+      white-space: nowrap;
+    }
+
+    .metric.neto-card {
+      background: linear-gradient(145deg, var(--primary-soft), var(--card-solid));
+      border-color: color-mix(in srgb, var(--primary) 45%, var(--line));
+    }
+
+    .metric.neto-card .value {
+      font-size: 26px;
+    }
+
+    .concept-pill {
+      border-radius: 10px;
+      padding-inline: 9px;
+      background: color-mix(in srgb, var(--primary-soft) 84%, transparent);
+    }
+
+    .sticky-actions {
+      border-radius: 20px;
+      box-shadow: 0 14px 34px rgba(46, 30, 65, .10);
+    }
+
+    .actions-modern {
+      grid-template-columns: minmax(220px, .95fr) minmax(360px, 1.4fr);
+    }
+
+    .action-secondary-box button {
+      min-height: 38px;
+    }
+
+    @media (max-width: 900px) {
+      .summary-cards.visual-summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+    }
+
+    @media (max-width: 620px) {
+      .brand-subtitle {
+        display: none;
+      }
+
+      .summary-cards.visual-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .import-panel {
+        padding: 12px;
+      }
+    }
+
+
+    /* ===== Versión sobria / institucional ===== */
+    :root {
+      --bg: #f4f6f8;
+      --bg-soft: #f8fafc;
+      --card: rgba(255,255,255,.96);
+      --card-solid: #ffffff;
+      --text: #151922;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --line-strong: #cfd5df;
+      --primary: #475467;
+      --primary-dark: #1f2937;
+      --primary-soft: #f2f4f7;
+      --accent: #7a5af8;
+      --success: #12805c;
+      --warning: #b54708;
+      --danger: #b42318;
+      --shadow: 0 8px 22px rgba(16, 24, 40, .05);
+      --shadow-soft: 0 4px 14px rgba(16, 24, 40, .045);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --input-bg: #ffffff;
+      --header-bg: rgba(255,255,255,.88);
+      --table-head: #f8fafc;
+      --hover: #f9fafb;
+      --festivo-bg: #fff7e6;
+      --festivo-text: #8a4b00;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #101318;
+      --bg-soft: #141821;
+      --card: rgba(24,29,39,.96);
+      --card-solid: #181d27;
+      --text: #f3f4f6;
+      --muted: #a4a7ae;
+      --line: #2f3643;
+      --line-strong: #485163;
+      --primary: #d0d5dd;
+      --primary-dark: #f5f5f6;
+      --primary-soft: #202632;
+      --accent: #a48afb;
+      --success: #75e0a7;
+      --warning: #fdb022;
+      --danger: #f97066;
+      --shadow: 0 8px 22px rgba(0, 0, 0, .18);
+      --shadow-soft: 0 4px 14px rgba(0, 0, 0, .14);
+      --input-bg: #111722;
+      --header-bg: rgba(20,24,33,.9);
+      --table-head: #1f2632;
+      --hover: #202632;
+      --festivo-bg: #332714;
+      --festivo-text: #ffd089;
+    }
+
+    body {
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-soft), var(--bg));
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .app-header {
+      border-bottom: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .header-inner {
+      min-height: 68px;
+      padding-block: 12px;
+    }
+
+    .brand {
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      flex-basis: 40px;
+      border-radius: 12px;
+      background: #1f2937;
+      box-shadow: none;
+      letter-spacing: .02em;
+    }
+
+    html[data-theme="dark"] .brand-mark {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .eyebrow {
+      margin-bottom: 1px;
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 760;
+      letter-spacing: .12em;
+    }
+
+    h1 {
+      font-size: clamp(20px, 2.4vw, 25px);
+      letter-spacing: -.025em;
+    }
+
+    main {
+      padding-top: 22px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 18px;
+      border-color: var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .card::before {
+      content: none !important;
+    }
+
+    .card-hero {
+      background: var(--card);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 760;
+      letter-spacing: -.01em;
+    }
+
+    h2::after {
+      background: var(--line);
+      opacity: .8;
+    }
+
+    .section-title-icon {
+      width: 28px;
+      height: 28px;
+      flex-basis: 28px;
+      border-radius: 9px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 13px;
+      box-shadow: none;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 720;
+      letter-spacing: .01em;
+    }
+
+    input, select {
+      min-height: 40px;
+      border-radius: 10px;
+      border-color: var(--line-strong);
+      background: var(--input-bg);
+      box-shadow: none;
+    }
+
+    input:hover, select:hover {
+      border-color: #98a2b3;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+
+    button {
+      min-height: 38px;
+      border-radius: 10px;
+      font-weight: 720;
+      box-shadow: none;
+      background: #1f2937;
+      transition: background .15s ease, transform .15s ease, border-color .15s ease;
+    }
+
+    button:hover {
+      filter: none;
+      transform: translateY(-1px);
+      background: #111827;
+    }
+
+    html[data-theme="dark"] button {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    html[data-theme="dark"] button:hover {
+      background: #ffffff;
+    }
+
+    button.light {
+      color: var(--text);
+      background: var(--card-solid);
+      border-color: var(--line-strong);
+    }
+
+    button.light:hover {
+      background: var(--primary-soft);
+      border-color: #98a2b3;
+    }
+
+    button.secondary {
+      color: var(--text);
+      background: var(--primary-soft);
+      border-color: var(--line);
+    }
+
+    button.secondary:hover {
+      background: color-mix(in srgb, var(--primary-soft) 68%, var(--line));
+    }
+
+    button.ok,
+    .calculate-main {
+      background: #1f2937;
+      color: #ffffff;
+      box-shadow: none;
+      letter-spacing: .01em;
+    }
+
+    button.ok:hover,
+    .calculate-main:hover {
+      background: #111827;
+    }
+
+    html[data-theme="dark"] button.ok,
+    html[data-theme="dark"] .calculate-main {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .stepper {
+      padding: 6px;
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stepper a {
+      min-height: 36px;
+      color: var(--muted);
+      font-size: 11.5px;
+      border-radius: 9px;
+    }
+
+    .stepper a:hover {
+      color: var(--text);
+      background: var(--primary-soft);
+      border-color: transparent;
+      transform: none;
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      flex-basis: 22px;
+      background: var(--card-solid);
+      border: 1px solid var(--line);
+      color: var(--primary-dark);
+      font-size: 10px;
+    }
+
+    .hour-pill,
+    .hour-pill.large {
+      color: var(--text);
+      background: var(--primary-soft);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .period-strip {
+      padding: 12px 14px;
+      background: var(--primary-soft);
+      border-radius: 12px;
+    }
+
+    .turno-legend {
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .legend-item {
+      padding: 5px 9px;
+      background: var(--card-solid);
+      color: var(--muted);
+      border-radius: 999px;
+      font-size: 10.5px;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+    }
+
+    .legend-m { background: #98d17b; }
+    .legend-t { background: #8ebee9; }
+    .legend-n { background: #e9ad6b; }
+    .legend-d { background: #d0d5dd; }
+    .legend-f { background: #f3c969; }
+
+    .import-panel {
+      align-items: stretch;
+      padding: 12px;
+      background: var(--card-solid);
+      border-radius: 14px;
+      box-shadow: none;
+    }
+
+    .dropzone {
+      min-height: 54px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      border-color: var(--line-strong);
+      transform: none !important;
+    }
+
+    .dropzone:hover,
+    .dropzone.dragover {
+      background: color-mix(in srgb, var(--primary-soft) 74%, var(--card-solid));
+      border-color: var(--accent);
+    }
+
+    .dropzone-icon {
+      width: 34px;
+      height: 34px;
+      flex-basis: 34px;
+      border-radius: 10px;
+      color: var(--primary-dark);
+      background: var(--card-solid);
+    }
+
+    .dropzone-copy strong {
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .dropzone-copy span {
+      font-size: 10.5px;
+    }
+
+    .table-wrap {
+      border-radius: 14px;
+      box-shadow: none;
+      background: var(--card-solid);
+    }
+
+    table {
+      min-width: 760px;
+    }
+
+    #tablaResultado {
+      min-width: 720px;
+    }
+
+    th {
+      background: var(--table-head);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .055em;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom-color: var(--line);
+    }
+
+    td {
+      font-size: 12.5px;
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: transparent;
+    }
+
+    tbody tr:hover td {
+      background-color: var(--hover);
+    }
+
+    .tabla-nomina tfoot td {
+      background: var(--table-head);
+      font-size: 13px;
+    }
+
+    .turno-dia {
+      transform: none !important;
+      font-weight: 760;
+      border-radius: 9px !important;
+    }
+
+    .turno-dia.color-descanso {
+      background: #f1f3f5;
+      color: #475467;
+      border-color: #d0d5dd;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-descanso {
+      background: #252c37;
+      color: #d0d5dd;
+      border-color: #485163;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: #dff3d5;
+      color: #255415;
+      border-color: #b8dea5;
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: #dbeeff;
+      color: #164267;
+      border-color: #b5d8f5;
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: #fde8cc;
+      color: #6b3a06;
+      border-color: #f1c48a;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-m,
+    html[data-theme="dark"] .turno-dia.color-4h,
+    html[data-theme="dark"] .turno-dia.color-12h-dia {
+      background: #1f3a22;
+      color: #c7efb6;
+      border-color: #356a38;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-t,
+    html[data-theme="dark"] .turno-dia.color-12h-tarde {
+      background: #1b3146;
+      color: #bddffd;
+      border-color: #315d83;
+    }
+
+    html[data-theme="dark"] .turno-dia.color-n,
+    html[data-theme="dark"] .turno-dia.color-12h-noche {
+      background: #402b15;
+      color: #ffd8a8;
+      border-color: #775126;
+    }
+
+    tbody tr.is-domingo-festivo td {
+      background: var(--festivo-bg) !important;
+    }
+
+    tbody tr.is-domingo-festivo:hover td {
+      filter: none;
+    }
+
+    .summary-cards.visual-summary {
+      grid-template-columns: 1.35fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 88px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--card-solid);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .metric::before {
+      width: 3px;
+      background: var(--line-strong);
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 760;
+    }
+
+    .metric .value {
+      margin-top: 7px;
+      font-size: 19px;
+      font-weight: 780;
+      color: var(--text);
+    }
+
+    .metric.neto-card {
+      background: var(--primary-soft);
+      border-color: var(--line-strong);
+      box-shadow: none;
+    }
+
+    .metric.neto-card::before {
+      background: #1f2937;
+    }
+
+    html[data-theme="dark"] .metric.neto-card::before {
+      background: #f3f4f6;
+    }
+
+    .metric.neto-card .value {
+      color: var(--text);
+      font-size: 25px;
+      font-weight: 820;
+    }
+
+    .badge,
+    .concept-pill {
+      color: var(--text);
+      background: var(--primary-soft);
+      border-color: var(--line);
+      font-size: 10.5px;
+      font-weight: 760;
+    }
+
+    .concept-pill {
+      border-radius: 8px;
+    }
+
+    .sticky-actions {
+      bottom: 10px;
+      padding: 14px;
+      background: color-mix(in srgb, var(--card-solid) 92%, transparent);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(16,24,40,.08);
+    }
+
+    html[data-theme="dark"] .sticky-actions {
+      box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    }
+
+    .actions-modern {
+      grid-template-columns: minmax(220px, .9fr) minmax(340px, 1.4fr);
+      gap: 12px;
+    }
+
+    .action-primary-box .calculate-main {
+      min-height: 48px;
+      font-size: 13px;
+    }
+
+    .action-secondary-box {
+      gap: 8px;
+    }
+
+    .error-box,
+    .ok-box {
+      border-radius: 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    @media (max-width: 900px) {
+      .summary-cards.visual-summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .actions-modern {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .header-inner {
+        min-height: 64px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+      }
+
+      h1 {
+        font-size: 19px;
+      }
+
+      .stepper {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #tablaCalendario tbody tr {
+        border-radius: 14px;
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .summary-cards.visual-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .action-secondary-box {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+
+    /* ===== Estilo oscuro fijo inspirado en plataformas tech ===== */
+    :root,
+    html[data-theme="dark"] {
+      --bg: #0b1117;
+      --bg-soft: #0f1720;
+      --card: rgba(18, 27, 38, .96);
+      --card-solid: #121b26;
+      --text: #f4f7fb;
+      --muted: #a9b4c0;
+      --line: #223044;
+      --line-strong: #344257;
+      --primary: #0aeb8b;
+      --primary-dark: #0aeb8b;
+      --primary-soft: rgba(10, 235, 139, .10);
+      --accent: #0aeb8b;
+      --success: #0aeb8b;
+      --warning: #f7b955;
+      --danger: #ff6b6b;
+      --shadow: 0 18px 46px rgba(0, 0, 0, .24);
+      --shadow-soft: 0 10px 26px rgba(0, 0, 0, .18);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --input-bg: #0d1520;
+      --header-bg: rgba(11, 17, 23, .88);
+      --table-head: #0f1824;
+      --hover: rgba(255, 255, 255, .035);
+      --festivo-bg: rgba(247, 185, 85, .13);
+      --festivo-text: #ffd37a;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 14% -12%, rgba(10, 235, 139, .16), transparent 26rem),
+        radial-gradient(circle at 94% 4%, rgba(83, 110, 255, .12), transparent 24rem),
+        linear-gradient(180deg, #0b1117, #0e141d 45%, #0b1117);
+      color: var(--text);
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .app-header {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      box-shadow: none;
+    }
+
+    .header-inner {
+      min-height: 70px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex-basis: 42px;
+      border: 1px solid rgba(10,235,139,.42);
+      background:
+        linear-gradient(145deg, rgba(10,235,139,.20), rgba(10,235,139,.06)),
+        #0e1722;
+      color: #0aeb8b;
+      box-shadow: 0 0 0 4px rgba(10,235,139,.05);
+    }
+
+    .eyebrow {
+      color: #0aeb8b;
+      opacity: .95;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .14em;
+    }
+
+    h1 {
+      color: var(--text);
+      font-size: clamp(21px, 2.7vw, 27px);
+      font-weight: 780;
+    }
+
+    main {
+      padding-top: 22px;
+    }
+
+    .card,
+    details.advanced {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.008)),
+        var(--card);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-hero {
+      background:
+        linear-gradient(135deg, rgba(10,235,139,.065), transparent 38%),
+        var(--card);
+    }
+
+    h2 {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 760;
+    }
+
+    h2::after {
+      background: linear-gradient(90deg, rgba(10,235,139,.25), transparent);
+    }
+
+    .section-title-icon {
+      background: rgba(10,235,139,.11);
+      color: #0aeb8b;
+      border: 1px solid rgba(10,235,139,.18);
+      box-shadow: none;
+    }
+
+    label {
+      color: #b7c2cf;
+      font-size: 11.5px;
+      font-weight: 760;
+    }
+
+    .hint {
+      color: #8996a5;
+    }
+
+    input,
+    select {
+      color: var(--text);
+      background: #0d1520;
+      border-color: #2b3b52;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+    }
+
+    input:hover,
+    select:hover {
+      border-color: rgba(10,235,139,.45);
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #0aeb8b;
+      box-shadow: 0 0 0 3px rgba(10,235,139,.13);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      opacity: .75;
+      cursor: pointer;
+    }
+
+    button {
+      background: #0aeb8b;
+      color: #07110c;
+      border-color: transparent;
+      box-shadow: none;
+      font-weight: 820;
+    }
+
+    button:hover {
+      background: #29f09a;
+      transform: translateY(-1px);
+      filter: none;
+    }
+
+    button.ok,
+    .calculate-main {
+      background: #0aeb8b;
+      color: #07110c;
+      box-shadow: 0 14px 32px rgba(10,235,139,.18);
+    }
+
+    button.ok:hover,
+    .calculate-main:hover {
+      background: #29f09a;
+    }
+
+    button.light,
+    button.secondary {
+      background: #111b28;
+      color: #dce5ef;
+      border-color: #2b3b52;
+    }
+
+    button.light:hover,
+    button.secondary:hover {
+      background: #172438;
+      border-color: rgba(10,235,139,.35);
+    }
+
+    .stepper {
+      background: rgba(18,27,38,.72);
+      border-color: rgba(255,255,255,.08);
+      box-shadow: none;
+    }
+
+    .stepper a {
+      color: #94a3b8;
+      border-radius: 10px;
+    }
+
+    .stepper a:hover {
+      color: #f4f7fb;
+      background: rgba(10,235,139,.08);
+    }
+
+    .step-number {
+      background: rgba(10,235,139,.10);
+      color: #0aeb8b;
+      border-color: rgba(10,235,139,.18);
+    }
+
+    .hour-pill,
+    .hour-pill.large,
+    .badge,
+    .concept-pill {
+      background: rgba(10,235,139,.09);
+      color: #bdfedb;
+      border-color: rgba(10,235,139,.20);
+    }
+
+    .period-strip {
+      background: rgba(255,255,255,.035);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .period-strip strong {
+      color: var(--text);
+    }
+
+    .period-strip span {
+      color: #9aa8b7;
+    }
+
+    .legend-item {
+      background: #101926;
+      color: #aab6c5;
+      border-color: #25364d;
+    }
+
+    .legend-m { background: #83e47b; }
+    .legend-t { background: #69b9ff; }
+    .legend-n { background: #ffb45f; }
+    .legend-d { background: #7b8794; }
+    .legend-f { background: #f7d06b; }
+
+    .import-panel {
+      background: rgba(255,255,255,.028);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .dropzone {
+      background: #0d1520;
+      border-color: #2b3b52;
+    }
+
+    .dropzone:hover,
+    .dropzone.dragover {
+      background: rgba(10,235,139,.055);
+      border-color: #0aeb8b;
+    }
+
+    .dropzone-icon {
+      color: #0aeb8b;
+      background: rgba(10,235,139,.10);
+    }
+
+    .dropzone-copy strong {
+      color: var(--text);
+    }
+
+    .dropzone-copy span {
+      color: #8996a5;
+    }
+
+    .table-wrap {
+      background: #0d1520;
+      border-color: rgba(255,255,255,.08);
+      box-shadow: none;
+    }
+
+    th {
+      background: #101926;
+      color: #9fb0c4;
+      border-bottom-color: #25364d;
+    }
+
+    td {
+      color: #e4eaf2;
+      border-bottom-color: rgba(255,255,255,.06);
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: rgba(255,255,255,.012);
+    }
+
+    tbody tr:hover td {
+      background-color: rgba(10,235,139,.04);
+    }
+
+    .tabla-nomina tfoot td {
+      background: #101926;
+      color: #f4f7fb;
+    }
+
+    tbody tr.is-domingo-festivo td {
+      background: rgba(247, 185, 85, .105) !important;
+    }
+
+    tbody tr.is-domingo-festivo td:nth-child(2),
+    tbody tr.is-domingo-festivo td:nth-child(3) {
+      color: #ffd37a;
+    }
+
+    .day-badge {
+      background: rgba(247,185,85,.16);
+      color: #ffd37a;
+    }
+
+    .turno-dia {
+      font-weight: 820;
+      border-radius: 10px !important;
+    }
+
+    .turno-dia.color-vacio {
+      background: #0d1520;
+      color: #a9b4c0;
+      border-color: #2b3b52;
+    }
+
+    .turno-dia.color-descanso {
+      background: #263241;
+      color: #d8e0ea;
+      border-color: #3a485a;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: rgba(10,235,139,.18);
+      color: #c9ffe3;
+      border-color: rgba(10,235,139,.38);
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: rgba(83,169,255,.20);
+      color: #d4ecff;
+      border-color: rgba(83,169,255,.40);
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: rgba(255,180,95,.22);
+      color: #ffddb6;
+      border-color: rgba(255,180,95,.42);
+    }
+
+    .metric {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.026), rgba(255,255,255,.010)),
+        #101926;
+      border-color: rgba(255,255,255,.08);
+      box-shadow: none;
+    }
+
+    .metric::before {
+      background: rgba(10,235,139,.55);
+    }
+
+    .metric .label {
+      color: #92a1b3;
+    }
+
+    .metric .value {
+      color: #f4f7fb;
+    }
+
+    .metric.neto-card {
+      background:
+        radial-gradient(circle at top right, rgba(10,235,139,.16), transparent 55%),
+        linear-gradient(180deg, rgba(10,235,139,.07), rgba(10,235,139,.025)),
+        #101926;
+      border-color: rgba(10,235,139,.25);
+    }
+
+    .metric.neto-card::before {
+      background: #0aeb8b;
+    }
+
+    .metric.neto-card .value {
+      color: #c9ffe3;
+    }
+
+    details.advanced summary {
+      color: #b7c2cf;
+    }
+
+    .sticky-actions {
+      background: rgba(13,21,32,.88);
+      border-color: rgba(255,255,255,.09);
+      box-shadow: 0 16px 42px rgba(0,0,0,.30);
+    }
+
+    .error-box {
+      background: rgba(80, 24, 28, .96);
+      color: #ffd0cc;
+      border-color: rgba(255,107,107,.35);
+    }
+
+    .ok-box {
+      background: rgba(10, 55, 36, .96);
+      color: #c9ffe3;
+      border-color: rgba(10,235,139,.28);
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+    }
+
+
+    /* ===== Ajustes oscuros finales ===== */
+    :root,
+    html[data-theme="dark"] {
+      --bg: #0b1117;
+      --bg-soft: #0f1720;
+      --card: #111a24;
+      --card-solid: #111a24;
+      --text: #f4f7fb;
+      --muted: #9ba6b2;
+      --line: #213043;
+      --line-strong: #34455c;
+      --primary: #0aeb8b;
+      --primary-dark: #0aeb8b;
+      --primary-soft: rgba(10,235,139,.10);
+      --accent: #0aeb8b;
+      --success: #0aeb8b;
+      --warning: #f7bd52;
+      --danger: #ff6b6b;
+      --shadow: 0 18px 42px rgba(0,0,0,.22);
+      --shadow-soft: 0 10px 28px rgba(0,0,0,.18);
+      --input-bg: #0b131c;
+      --header-bg: rgba(11,17,23,.92);
+      --table-head: #0d1620;
+      --hover: #152231;
+      --festivo-bg: rgba(247,189,82,.14);
+      --festivo-text: #ffd98a;
+    }
+
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(10,235,139,.12), transparent 26rem),
+        radial-gradient(circle at 90% 10%, rgba(68,92,246,.09), transparent 25rem),
+        linear-gradient(180deg, #0f1720 0%, #0b1117 100%);
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    }
+
+    .header-inner {
+      min-height: 70px;
+    }
+
+    .app-header {
+      background: rgba(11,17,23,.86);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand-mark {
+      background: rgba(10,235,139,.12);
+      color: #0aeb8b;
+      border: 1px solid rgba(10,235,139,.35);
+      box-shadow: none;
+    }
+
+    .eyebrow {
+      color: #0aeb8b;
+      opacity: .92;
+    }
+
+    h1 {
+      color: #ffffff;
+    }
+
+    main {
+      padding-top: 24px;
+    }
+
+    .card {
+      background: rgba(17,26,36,.88);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,.20);
+    }
+
+    .card-hero {
+      background:
+        linear-gradient(135deg, rgba(10,235,139,.07), transparent 44%),
+        rgba(17,26,36,.92);
+    }
+
+    h2 {
+      color: #f8fafc;
+    }
+
+    h2::after {
+      background: rgba(255,255,255,.09);
+    }
+
+    .section-title-icon {
+      color: #0aeb8b;
+      background: rgba(10,235,139,.10);
+      border: 1px solid rgba(10,235,139,.16);
+    }
+
+    label {
+      color: #aab4c0;
+    }
+
+    input,
+    select {
+      background: #0b131c;
+      color: #f8fafc;
+      border-color: #2a3a4f;
+      box-shadow: none;
+    }
+
+    input:hover,
+    select:hover {
+      border-color: #52657c;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #0aeb8b;
+      box-shadow: 0 0 0 3px rgba(10,235,139,.14);
+    }
+
+    input::placeholder {
+      color: #6f7d8c;
+    }
+
+    button {
+      background: #0aeb8b;
+      color: #06120d;
+      border-color: transparent;
+      box-shadow: none;
+      font-weight: 800;
+    }
+
+    button:hover {
+      background: #35f3a3;
+      color: #06120d;
+      transform: translateY(-1px);
+    }
+
+    button.light,
+    button.secondary {
+      background: #162232;
+      color: #d8dee6;
+      border-color: #2a3a4f;
+    }
+
+    button.light:hover,
+    button.secondary:hover {
+      background: #1d2c3f;
+      border-color: #3b536e;
+      color: #ffffff;
+    }
+
+    button.ok,
+    .calculate-main,
+    button.ok:hover,
+    .calculate-main:hover {
+      background: #0aeb8b;
+      color: #06120d;
+    }
+
+    .hour-pill,
+    .hour-pill.large {
+      background: rgba(10,235,139,.09);
+      color: #dffdef;
+      border-color: rgba(10,235,139,.24);
+    }
+
+    .hint {
+      color: #8793a1;
+    }
+
+    .period-strip {
+      background: #0d1620;
+      border-color: rgba(255,255,255,.07);
+    }
+
+    .period-strip strong {
+      color: #ffffff;
+    }
+
+    .period-strip span {
+      color: #9ba6b2;
+    }
+
+    .legend-item {
+      background: #0d1620;
+      border-color: rgba(255,255,255,.08);
+      color: #aab4c0;
+    }
+
+    .legend-m { background: #65d36e; }
+    .legend-t { background: #4aa3ff; }
+    .legend-n { background: #ffaf45; }
+    .legend-d { background: #6b7684; }
+    .legend-f { background: #f7bd52; }
+
+    .import-panel {
+      background: rgba(13,22,32,.78);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .dropzone {
+      background: #0b131c;
+      border-color: #2a3a4f;
+    }
+
+    .dropzone:hover,
+    .dropzone.dragover {
+      background: rgba(10,235,139,.08);
+      border-color: rgba(10,235,139,.55);
+    }
+
+    .dropzone-icon {
+      color: #0aeb8b;
+      background: rgba(10,235,139,.10);
+    }
+
+    .table-wrap {
+      background: #0b131c;
+      border-color: rgba(255,255,255,.08);
+    }
+
+    th {
+      background: #0d1620;
+      color: #96a3b2;
+      border-bottom-color: rgba(255,255,255,.08);
+    }
+
+    td {
+      color: #e7edf5;
+      border-bottom-color: rgba(255,255,255,.06);
+    }
+
+    tbody tr:hover td {
+      background-color: #132030;
+    }
+
+    .tabla-nomina tfoot td {
+      background: #0d1620;
+      color: #f8fafc;
+    }
+
+    .metric {
+      background: #0b131c;
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .metric::before {
+      background: rgba(255,255,255,.12);
+    }
+
+    .metric .label {
+      color: #96a3b2;
+    }
+
+    .metric .value {
+      color: #ffffff;
+    }
+
+    .metric.neto-card {
+      background:
+        linear-gradient(135deg, rgba(10,235,139,.14), rgba(10,235,139,.04)),
+        #0b131c;
+      border-color: rgba(10,235,139,.28);
+    }
+
+    .metric.neto-card::before {
+      background: #0aeb8b;
+    }
+
+    .metric.neto-card .value {
+      color: #dffdef;
+    }
+
+    .badge,
+    .concept-pill {
+      background: rgba(10,235,139,.10);
+      color: #dffdef;
+      border-color: rgba(10,235,139,.18);
+    }
+
+    .turno-dia.color-descanso {
+      background: #202b38;
+      color: #d3d9e1;
+      border-color: #39495d;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: rgba(101,211,110,.18);
+      color: #c8f8cd;
+      border-color: rgba(101,211,110,.38);
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: rgba(74,163,255,.18);
+      color: #d2eaff;
+      border-color: rgba(74,163,255,.36);
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: rgba(255,175,69,.20);
+      color: #ffdfb7;
+      border-color: rgba(255,175,69,.40);
+    }
+
+    tbody tr.is-domingo-festivo td {
+      background: rgba(247,189,82,.10) !important;
+    }
+
+    tbody tr.is-domingo-festivo td:nth-child(2),
+    tbody tr.is-domingo-festivo td:nth-child(3) {
+      color: #ffd98a;
+    }
+
+    .sticky-actions {
+      background: rgba(11,19,28,.90);
+      border-color: rgba(255,255,255,.10);
+      box-shadow: 0 16px 40px rgba(0,0,0,.28);
+      backdrop-filter: blur(16px);
+    }
+
+    .error-box {
+      background: rgba(127,29,29,.94);
+      color: #fecaca;
+      border-color: rgba(248,113,113,.35);
+    }
+
+    .ok-box {
+      background: rgba(6,95,70,.94);
+      color: #ccfbf1;
+      border-color: rgba(10,235,139,.32);
+    }
+
+    .stepper {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      main {
+        padding-top: 16px;
+      }
+    }
+
+
+    /* ===== Organización por vistas ===== */
+    .view-tabs {
+      max-width: 1200px;
+      margin: 0 auto 18px;
+      padding: 6px;
+      display: inline-flex;
+      gap: 6px;
+      background: rgba(13,22,32,.78);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+    }
+
+    .view-tab {
+      min-width: 118px;
+      min-height: 38px;
+      padding: 8px 16px;
+      background: transparent;
+      color: #aab4c0;
+      border: 1px solid transparent;
+      box-shadow: none;
+      border-radius: 12px;
+    }
+
+    .view-tab:hover {
+      background: rgba(255,255,255,.05);
+      color: #ffffff;
+      transform: none;
+    }
+
+    .view-tab.is-active {
+      background: rgba(10,235,139,.13);
+      border-color: rgba(10,235,139,.35);
+      color: #dffdef;
+    }
+
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.is-active {
+      display: block;
+    }
+
+    .sticky-actions {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 620px) {
+      .view-tabs {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .view-tab {
+        width: 100%;
+      }
+    }
+
+
+    /* ===== Ajustes v4: encabezado centrado, vistas centradas y configuración ===== */
+    .header-centered {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .brand-centered {
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 2px;
+      justify-items: center;
+    }
+
+    .brand-centered .brand-mark {
+      width: 46px;
+      height: 46px;
+      flex-basis: 46px;
+      border-radius: 15px;
+    }
+
+    .view-tabs {
+      display: flex;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
+    }
+
+    .view-tab {
+      text-align: center;
+    }
+
+    .config-panel .advanced-body {
+      padding: 0;
+    }
+
+    .config-panel .grid {
+      margin-top: 2px;
+    }
+
+    .config-panel .hint {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px;
+      background: rgba(10,235,139,.06);
+    }
+
+    @media (max-width: 620px) {
+      .brand-centered .brand-mark {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+      }
+
+      .view-tabs {
+        width: 100%;
+      }
+    }
+
+
+    /* ===== Acciones separadas por vista ===== */
+    .view-actions {
+      display: none;
+    }
+
+    .view-actions.is-active {
+      display: block;
+    }
+
+    .actions-turnos {
+      grid-template-columns: minmax(220px, 420px);
+      justify-content: center;
+    }
+
+    .actions-secondary-only {
+      grid-template-columns: 1fr;
+    }
+
+    .actions-secondary-only .action-secondary-box {
+      justify-content: center;
+    }
+
+    .view-configuracion + .sticky-actions,
+    .view-actions.view-configuracion {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      .actions-turnos {
+        grid-template-columns: 1fr;
+      }
+
+      .actions-secondary-only .action-secondary-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    /* ===== Ajustes v6 ===== */
+    #mensajesError,
+    #mensajesOk {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      width: min(760px, calc(100vw - 28px));
+      max-height: 32vh;
+      overflow: auto;
+      margin: 0;
+      white-space: pre-line;
+      z-index: 9999;
+      box-shadow: 0 18px 42px rgba(0,0,0,.36);
+      backdrop-filter: blur(14px);
+    }
+
+    #mensajesOk {
+      text-align: center;
+    }
+
+    #pasoResultado {
+      max-width: 1040px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #pasoResultado h2 {
+      justify-content: center;
+    }
+
+    #pasoResultado #contadorResultado {
+      margin-inline: auto;
+    }
+
+    #pasoResultado .table-wrap {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #tablaResultado th,
+    #tablaResultado td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #tablaResultado .number {
+      text-align: center;
+    }
+
+    #tablaResultado .concept-pill {
+      justify-content: center;
+    }
+
+    .period-strip {
+      display: none !important;
+    }
+
+
+    /* ===== v7: mensajes inferiores compactos ===== */
+    #mensajesError,
+    #mensajesOk {
+      position: fixed !important;
+      left: 50% !important;
+      right: auto !important;
+      bottom: 12px !important;
+      transform: translateX(-50%) !important;
+      width: min(720px, calc(100vw - 24px)) !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 12px 16px !important;
+      border-radius: 14px !important;
+      white-space: normal !important;
+      text-align: center !important;
+      line-height: 1.35 !important;
+      z-index: 2147483000 !important;
+      font-size: 13px !important;
+      box-shadow: 0 14px 36px rgba(0,0,0,.42) !important;
+      backdrop-filter: blur(14px) !important;
+    }
+
+    #mensajesError {
+      background: rgba(59, 18, 24, .98) !important;
+      color: #ffb4ad !important;
+      border: 1px solid rgba(248,113,113,.42) !important;
+    }
+
+    #mensajesOk {
+      background: rgba(5, 73, 54, .98) !important;
+      color: #ccfbf1 !important;
+      border: 1px solid rgba(10,235,139,.36) !important;
+    }
+
+    @media (max-width: 700px) {
+      #mensajesError,
+      #mensajesOk {
+        bottom: 8px !important;
+        width: calc(100vw - 16px) !important;
+        padding: 11px 13px !important;
+      }
+    }
+
+
+    /* ===== Ajuste v8: acciones al final, sin movimiento al hacer scroll ===== */
+    .sticky-actions {
+      position: static !important;
+      bottom: auto !important;
+      z-index: auto !important;
+      margin-top: 18px !important;
+      backdrop-filter: none !important;
+    }
+
+    .view-actions.is-active {
+      display: block;
+    }
+
+
+    /* ===== Vista Formato Recargos ===== */
+    .formato-panel {
+      text-align: center;
+    }
+
+    .formato-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .tabla-formato-recargos {
+      min-width: 920px;
+    }
+
+    .tabla-formato-recargos th,
+    .tabla-formato-recargos td {
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .tabla-formato-recargos thead tr:first-child th {
+      color: #dffdef;
+      background: rgba(10,235,139,.10);
+      border-bottom-color: rgba(10,235,139,.20);
+    }
+
+    .tabla-formato-recargos thead tr:nth-child(2) th {
+      color: #9feecb;
+      background: #0d1620;
+    }
+
+    .tabla-formato-recargos tbody td:nth-child(1),
+    .tabla-formato-recargos tbody td:nth-child(2),
+    .tabla-formato-recargos tbody td:nth-child(3) {
+      text-align: left;
+    }
+
+    .tabla-formato-recargos tbody td:nth-child(n+4),
+    .tabla-formato-recargos tfoot td.number {
+      font-variant-numeric: tabular-nums;
+      font-weight: 760;
+    }
+
+    .tabla-formato-recargos .formato-total-dia,
+    .tabla-formato-recargos tfoot td {
+      color: #dffdef;
+    }
+
+    .tabla-formato-recargos tfoot td {
+      background: rgba(10,235,139,.09);
+      border-top: 1px solid rgba(10,235,139,.24);
+    }
+
+    .tabla-formato-recargos tr.formato-domingo td {
+      background: rgba(247,189,82,.10) !important;
+    }
+
+    .tabla-formato-recargos .empty-state {
+      padding: 22px;
+      color: var(--muted);
+      text-align: center !important;
+    }
+
+
+    /* ===== Formato Recargos v11: estructura tipo tabla de liquidación ===== */
+    .tabla-formato-recargos.tabla-formato-excel {
+      min-width: 1040px;
+      border-collapse: collapse;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel th,
+    .tabla-formato-recargos.tabla-formato-excel td {
+      padding: 8px 9px;
+      text-align: center !important;
+      border-right: 1px solid rgba(255,255,255,.08);
+      white-space: nowrap;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th {
+      color: #06120d;
+      background: #b6c348;
+      border-color: rgba(0,0,0,.18);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th {
+      color: #06120d;
+      background: #c7cc72;
+      border-color: rgba(0,0,0,.18);
+      font-size: 10.5px;
+      font-weight: 850;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th {
+      color: #ff4f4f;
+      background: #aeb89f;
+      border-color: rgba(0,0,0,.20);
+      font-size: 10.5px;
+      font-weight: 850;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      min-width: 108px;
+      text-align: left !important;
+      font-weight: 760;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody td {
+      background: rgba(151,184,178,.18);
+      color: #e8f3ef;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td {
+      background: rgba(247,189,82,.24) !important;
+      color: #fff2c7;
+      font-weight: 760;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:hover td {
+      background: rgba(10,235,139,.10);
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo:hover td {
+      background: rgba(247,189,82,.30) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel td.concepto-recargo,
+    .tabla-formato-recargos.tabla-formato-excel td.concepto-extra {
+      font-weight: 820;
+      color: #dffdef;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot td {
+      background: #b6c348;
+      color: #06120d;
+      border-color: rgba(0,0,0,.22);
+      font-weight: 900;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td {
+      background: #c7cc72;
+      color: #9b1c1c;
+      font-size: 10.5px;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .total-label {
+      text-align: right !important;
+      padding-right: 18px;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .empty-state {
+      padding: 22px;
+      color: var(--muted);
+      text-align: center !important;
+    }
+
+
+    /* ===== Formato Recargos v12: sin bloque Trabajo Extra ===== */
+    .tabla-formato-recargos.tabla-formato-excel {
+      min-width: 1040px;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      min-width: 112px;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(n+6),
+    .tabla-formato-recargos.tabla-formato-excel tfoot td.number {
+      min-width: 58px;
+    }
+
+
+    /* ===== Ajustes v13 Formato Recargos ===== */
+    .formato-meta {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .formato-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 7px;
+      max-width: 980px;
+      color: #aab4c0;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .formato-legend span {
+      padding: 5px 8px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      background: rgba(13,22,32,.78);
+      white-space: nowrap;
+    }
+
+    .formato-legend strong {
+      color: #dffdef;
+      font-weight: 800;
+    }
+
+    .tabla-formato-recargos th,
+    .tabla-formato-recargos td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .tabla-formato-recargos .fecha-col,
+    .tabla-formato-recargos .formato-fecha {
+      text-align: left;
+    }
+
+    @media (max-width: 700px) {
+      .formato-legend {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .formato-legend span {
+        white-space: normal;
+      }
+    }
+
+
+    /* ===== Formato Recargos v14: tabla integrada al diseño ===== */
+    .formato-meta,
+    #contadorFormatoRecargos {
+      display: none !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel {
+      border: 1px solid rgba(255,255,255,.08) !important;
+      background: #0b131c !important;
+      border-collapse: collapse;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel th,
+    .tabla-formato-recargos.tabla-formato-excel td {
+      padding: 8px 9px;
+      border-right: 1px solid rgba(255,255,255,.06) !important;
+      border-bottom: 1px solid rgba(255,255,255,.06) !important;
+      font-weight: 400 !important;
+      color: #e7edf5 !important;
+      background: #0b131c !important;
+      text-align: center !important;
+      vertical-align: middle;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead th {
+      background: #0d1620 !important;
+      color: #dffdef !important;
+      font-weight: 650 !important;
+      letter-spacing: .035em;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th {
+      background: rgba(10,235,139,.09) !important;
+      color: #dffdef !important;
+      border-bottom: 1px solid rgba(10,235,139,.22) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th {
+      background: #0d1620 !important;
+      color: #aab4c0 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      text-align: left !important;
+      font-weight: 400 !important;
+      color: #e7edf5 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel td.concepto-recargo,
+    .tabla-formato-recargos.tabla-formato-excel td.concepto-extra,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(n+6),
+    .tabla-formato-recargos.tabla-formato-excel tfoot td.number {
+      font-weight: 400 !important;
+      color: #e7edf5 !important;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:hover td {
+      background: #132030 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td {
+      background: rgba(247,189,82,.11) !important;
+      color: #ffdf9a !important;
+      font-weight: 400 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo:hover td {
+      background: rgba(247,189,82,.16) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot td {
+      background: #0d1620 !important;
+      color: #d8dee6 !important;
+      font-weight: 400 !important;
+      border-top: 1px solid rgba(10,235,139,.20) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .total-label {
+      text-align: right !important;
+      padding-right: 18px;
+      color: #dffdef !important;
+      font-weight: 500 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td {
+      background: rgba(10,235,139,.06) !important;
+      color: #dffdef !important;
+      font-size: 10.5px;
+      font-weight: 400 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-legend-row td {
+      background: #0b131c !important;
+      color: #aab4c0 !important;
+      text-align: left !important;
+      white-space: normal;
+      line-height: 1.45;
+      padding: 10px 12px;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .formato-legend-row span {
+      display: block;
+      color: #aab4c0 !important;
+      font-weight: 400 !important;
+    }
+
+
+
+    /* ===== Formato Recargos v15: líneas divisorias por bloques ===== */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(1) {
+      border-right: 2px solid rgba(10,235,139,.28) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(5),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:first-child {
+      border-right: 2px solid rgba(10,235,139,.28) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:nth-child(2) {
+      box-shadow: inset -1px 0 0 rgba(10,235,139,.12);
+    }
+
+
+
+    /* ===== Formato Recargos v16: separadores internos y borde exterior visible ===== */
+    .tabla-formato-recargos.tabla-formato-excel {
+      border: 2px solid rgba(0, 0, 0, .78) !important;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 10px 28px rgba(0,0,0,.24);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Separación principal: FECHA | JORNADA ORDINARIA | LIQUIDACIÓN HORAS */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(1) {
+      border-right: 2px solid rgba(0,0,0,.78) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(5),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:first-child {
+      border-right: 2px solid rgba(0,0,0,.78) !important;
+    }
+
+    /* Separación interna en JORNADA ORDINARIA: DESDE | HASTA */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(3) {
+      border-right: 2px solid rgba(0,0,0,.58) !important;
+    }
+
+    /* Separación interna en LIQUIDACIÓN HORAS: RECARGOS | HORAS EXTRAS */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(3),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(7),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(8),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:nth-child(4) {
+      border-right: 2px solid rgba(0,0,0,.58) !important;
+    }
+
+    /* Refuerzo visual leve en encabezados de grupos */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th {
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,.18);
+    }
+
+
+
+    /* ===== Formato Recargos v17: negrillas y columna DIA ===== */
+    .tabla-formato-recargos.tabla-formato-excel thead th,
+    .tabla-formato-recargos.tabla-formato-excel tfoot .total-label,
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td,
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-legend-row td,
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col {
+      font-weight: 700 !important;
+    }
+
+    /* Datos, fechas y resultados sin negrilla */
+    .tabla-formato-recargos.tabla-formato-excel tbody td,
+    .tabla-formato-recargos.tabla-formato-excel tbody td.number,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha,
+    .tabla-formato-recargos.tabla-formato-excel tfoot td.number {
+      font-weight: 400 !important;
+    }
+
+    /* Columna DIA: mejor aprovechamiento del espacio, centrado vertical del bloque */
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col {
+      width: 132px;
+      min-width: 132px;
+      text-align: center !important;
+      vertical-align: middle !important;
+      letter-spacing: .04em;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      width: 132px;
+      min-width: 132px;
+      text-align: left !important;
+      vertical-align: middle !important;
+      white-space: nowrap;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child {
+      vertical-align: middle !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    /* Encabezados de grupo con presencia más clara */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th {
+      font-weight: 700 !important;
+    }
+
+
+
+    /* ===== v18: botón de tema minimalista ===== */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+      padding: 10px 14px;
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--card-solid) 78%, transparent);
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: var(--primary-soft);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle-icon {
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--primary-soft), transparent);
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .theme-toggle-text {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      white-space: nowrap;
+    }
+
+    html[data-theme="dark"] .theme-toggle {
+      background: rgba(26, 20, 37, .92);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    html[data-theme="dark"] .theme-toggle:hover {
+      background: rgba(49, 34, 65, .92);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    /* ===== v18: columna DIA más compacta ===== */
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      width: 92px !important;
+      min-width: 92px !important;
+      max-width: 92px !important;
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+      text-align: center !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(1) {
+      border-right: 2px solid rgba(0,0,0,.78) !important;
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .theme-toggle {
+        margin-left: 0;
+      }
+      .theme-toggle-text {
+        display: none;
+      }
+    }
+
+
+
+    /* ===== v21: sistema visual reajustado con paleta sobria ===== */
+    :root,
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #d7dfda;
+      --bg-soft: #e4ebe6;
+      --card: #e9efeb;
+      --card-solid: #e6ede8;
+      --text: #18241f;
+      --muted: #66746e;
+      --line: #c0ccc6;
+      --line-strong: #889f94;
+      --primary: #1f7a58;
+      --primary-dark: #155b42;
+      --primary-soft: rgba(31, 122, 88, .12);
+      --accent: #2a956c;
+      --success: #1f7a58;
+      --warning: #9c6a14;
+      --danger: #ad3b32;
+      --shadow: 0 14px 32px rgba(28, 45, 38, .10);
+      --shadow-soft: 0 8px 20px rgba(28, 45, 38, .08);
+      --input-bg: #dfe8e3;
+      --header-bg: rgba(219, 228, 223, .88);
+      --table-head: #d4e2da;
+      --hover: #dce8e2;
+      --festivo-bg: #efe0b2;
+      --festivo-text: #614700;
+      --format-bg: #dfe8e3;
+      --format-bg-alt: #d8e3dd;
+      --format-head-1: #bfd7cc;
+      --format-head-2: #ccdcd4;
+      --format-line: #b8c6c0;
+      --format-line-strong: #25352e;
+      --format-line-mid: #6d7f76;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #11171c;
+      --bg-soft: #151d23;
+      --card: #182129;
+      --card-solid: #182129;
+      --text: #e6edf3;
+      --muted: #9da9b4;
+      --line: #293541;
+      --line-strong: #405461;
+      --primary: #68c893;
+      --primary-dark: #9be0b6;
+      --primary-soft: rgba(104, 200, 147, .12);
+      --accent: #68c893;
+      --success: #68c893;
+      --warning: #d8a84c;
+      --danger: #ee7b73;
+      --shadow: 0 0 0 1px rgba(255,255,255,.025), 0 18px 38px rgba(0,0,0,.20);
+      --shadow-soft: 0 0 0 1px rgba(255,255,255,.02), 0 10px 24px rgba(0,0,0,.16);
+      --input-bg: #131b22;
+      --header-bg: rgba(17, 23, 28, .88);
+      --table-head: #18242c;
+      --hover: #1d2a34;
+      --festivo-bg: rgba(216, 168, 76, .15);
+      --festivo-text: #e8c56e;
+      --format-bg: #121a21;
+      --format-bg-alt: #151e25;
+      --format-head-1: #143126;
+      --format-head-2: #17252d;
+      --format-line: #26323b;
+      --format-line-strong: #0a0e12;
+      --format-line-mid: #4b5b55;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 14% -8%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 28rem),
+        radial-gradient(circle at 94% 4%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 24rem),
+        linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%) !important;
+      color: var(--text) !important;
+    }
+
+    .app-header {
+      background: var(--header-bg) !important;
+      border-bottom: 1px solid var(--line) !important;
+      box-shadow: none !important;
+    }
+
+    .card,
+    .action-panel,
+    .sticky-actions {
+      background: var(--card) !important;
+      border-color: var(--line) !important;
+      box-shadow: var(--shadow) !important;
+    }
+
+    input,
+    select {
+      background: var(--input-bg) !important;
+      color: var(--text) !important;
+      border-color: var(--line) !important;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent) !important;
+    }
+
+    .view-tabs {
+      background: color-mix(in srgb, var(--card-solid) 82%, transparent) !important;
+      border-color: var(--line) !important;
+      box-shadow: var(--shadow-soft) !important;
+    }
+
+    .view-tab {
+      color: var(--muted) !important;
+      background: transparent !important;
+    }
+
+    .view-tab.is-active {
+      color: var(--primary-dark) !important;
+      background: var(--primary-soft) !important;
+      border-color: color-mix(in srgb, var(--primary) 30%, var(--line)) !important;
+    }
+
+    .brand-mark {
+      color: var(--primary-dark) !important;
+      background: var(--primary-soft) !important;
+      box-shadow: none !important;
+      border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line));
+    }
+
+    .eyebrow,
+    .section-title-icon {
+      color: var(--primary) !important;
+    }
+
+    .theme-toggle {
+      min-width: 92px;
+      justify-content: center;
+      background: color-mix(in srgb, var(--card-solid) 86%, transparent) !important;
+      border-color: var(--line) !important;
+      color: var(--text) !important;
+      box-shadow: var(--shadow-soft) !important;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary-soft) !important;
+      border-color: color-mix(in srgb, var(--primary) 34%, var(--line)) !important;
+    }
+
+    .theme-toggle-icon {
+      background: var(--primary-soft) !important;
+    }
+
+    table {
+      background: var(--card-solid) !important;
+    }
+
+    th {
+      background: var(--table-head) !important;
+      color: var(--primary-dark) !important;
+      border-bottom-color: var(--line) !important;
+    }
+
+    td {
+      color: var(--text) !important;
+      border-bottom-color: var(--line) !important;
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: color-mix(in srgb, var(--card-solid) 88%, var(--hover)) !important;
+    }
+
+    tbody tr:hover td {
+      background-color: var(--hover) !important;
+    }
+
+    tbody tr.is-domingo-festivo td,
+    tbody tr.formato-festivo td {
+      background: var(--festivo-bg) !important;
+      color: var(--festivo-text) !important;
+    }
+
+    /* Formato Recargos: menos brillo, mejor separación y sin blancos puros */
+    .tabla-formato-recargos.tabla-formato-excel {
+      background: var(--format-bg) !important;
+      border: 2px solid var(--format-line-strong) !important;
+      box-shadow: var(--shadow-soft) !important;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel th,
+    .tabla-formato-recargos.tabla-formato-excel td {
+      background: var(--format-bg) !important;
+      color: var(--text) !important;
+      border-right: 1px solid var(--format-line) !important;
+      border-bottom: 1px solid var(--format-line) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th {
+      background: var(--format-head-1) !important;
+      color: var(--primary-dark) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th {
+      background: var(--format-head-2) !important;
+      color: var(--muted) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:nth-child(even) td {
+      background: var(--format-bg-alt) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:hover td {
+      background: var(--hover) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td {
+      background: var(--festivo-bg) !important;
+      color: var(--festivo-text) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot td {
+      background: var(--format-head-2) !important;
+      color: var(--text) !important;
+      border-top: 1px solid color-mix(in srgb, var(--primary) 25%, var(--format-line)) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td {
+      background: var(--format-head-1) !important;
+      color: var(--primary-dark) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-legend-row td,
+    .tabla-formato-recargos.tabla-formato-excel .formato-legend-row span {
+      background: var(--format-bg) !important;
+      color: var(--muted) !important;
+    }
+
+    /* Líneas de bloques con variables para ambos modos */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(1),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(5),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:first-child {
+      border-right: 2px solid var(--format-line-strong) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(3),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(3),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(7),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(8),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:nth-child(4) {
+      border-right: 2px solid var(--format-line-mid) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      width: 82px !important;
+      min-width: 82px !important;
+      max-width: 82px !important;
+      text-align: center !important;
+      padding-left: 6px !important;
+      padding-right: 6px !important;
+    }
+
+
+
+
+    /* Compatibilidad con reglas previas */
+    :root {
+      --bg: var(--bg-base);
+      --bg-soft: var(--bg-subtle);
+      --card: var(--bg-panel);
+      --card-solid: var(--bg-panel);
+      --text: var(--text-primary);
+      --muted: var(--text-muted);
+      --line: var(--border-subtle);
+      --line-strong: var(--border-strong);
+      --primary: var(--accent);
+      --primary-dark: var(--accent-strong);
+      --primary-soft: var(--accent-soft);
+      --input-bg: var(--bg-inset);
+      --header-bg: var(--bg-base);
+      --hover: var(--table-hover);
+    }
+
+    /* =========================================================
+       v22 · Sistema visual Linear/Radix
+       Tokens semánticos + layering por superficie
+       ========================================================= */
+
+    :root {
+      color-scheme: light;
+
+      --bg-base: #ecebe7;
+      --bg-subtle: #f2f1ed;
+      --bg-elevated: #f7f6f2;
+      --bg-panel: #efeee9;
+      --bg-inset: #e5e3dd;
+
+      --text-primary: #1d1d20;
+      --text-secondary: #4f5056;
+      --text-muted: #71727a;
+      --text-inverse: #ededef;
+
+      --border-subtle: #d7d5cd;
+      --border-strong: #c4c0b6;
+      --border-accent: rgba(0, 126, 82, .28);
+
+      --accent: #007e52;
+      --accent-strong: #006b46;
+      --accent-soft: rgba(0, 126, 82, .10);
+      --accent-hover: rgba(0, 126, 82, .15);
+
+      --danger: #b42318;
+      --danger-soft: #f8dedb;
+      --success: #087443;
+      --success-soft: #dcefe5;
+      --warning: #8a5a00;
+      --warning-soft: #f1e4bd;
+
+      --radius: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+
+      --shadow-elevated: 0 1px 2px rgba(24, 24, 27, .06);
+      --shadow-panel: 0 1px 0 rgba(255,255,255,.64) inset;
+
+      --table-head: #e4e2dc;
+      --table-row: #f3f2ee;
+      --table-row-alt: #ecebe6;
+      --table-hover: #e3eee8;
+      --festivo-bg: #eadfb9;
+      --festivo-text: #5d4200;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+
+      --bg-base: #0f1117;
+      --bg-subtle: #13161d;
+      --bg-elevated: #171a22;
+      --bg-panel: #1b1f29;
+      --bg-inset: #10131a;
+
+      --text-primary: #ededef;
+      --text-secondary: #c3c5cb;
+      --text-muted: #8e929c;
+      --text-inverse: #101115;
+
+      --border-subtle: #282d38;
+      --border-strong: #343a47;
+      --border-accent: rgba(52, 211, 153, .25);
+
+      --accent: #34d399;
+      --accent-strong: #6ee7b7;
+      --accent-soft: rgba(52, 211, 153, .10);
+      --accent-hover: rgba(52, 211, 153, .16);
+
+      --danger: #ff817a;
+      --danger-soft: #3a2022;
+      --success: #34d399;
+      --success-soft: #173326;
+      --warning: #f4c36c;
+      --warning-soft: #332919;
+
+      --shadow-elevated: none;
+      --shadow-panel: 0 1px 0 rgba(255,255,255,.035) inset;
+
+      --table-head: #1c202a;
+      --table-row: #12161d;
+      --table-row-alt: #151922;
+      --table-hover: #1b2630;
+      --festivo-bg: #2b281d;
+      --festivo-text: #e8c46c;
+    }
+
+    html {
+      background: var(--bg-base) !important;
+      scroll-behavior: smooth;
+      font-variant-numeric: tabular-nums;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text-primary) !important;
+      background:
+        radial-gradient(circle at 18% -20%, var(--accent-soft), transparent 30rem),
+        linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-base) 42%, var(--bg-base) 100%) !important;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+      font-size: 14px;
+      line-height: 1.48;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: color-mix(in srgb, var(--bg-base) 86%, transparent) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: none !important;
+    }
+
+    .header-inner {
+      max-width: 1180px !important;
+      min-height: 68px !important;
+      margin: 0 auto;
+      padding: 12px 22px !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .header-centered {
+      justify-content: space-between !important;
+    }
+
+    .brand,
+    .brand-centered {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start !important;
+      gap: 12px;
+      min-width: 0;
+      text-align: left !important;
+    }
+
+    .brand-mark {
+      width: 36px !important;
+      height: 36px !important;
+      flex: 0 0 36px !important;
+      border-radius: 11px !important;
+      display: grid;
+      place-items: center;
+      color: var(--accent-strong) !important;
+      background: var(--accent-soft) !important;
+      border: 1px solid var(--border-accent) !important;
+      box-shadow: var(--shadow-panel) !important;
+      font-size: 12px !important;
+      font-weight: 760 !important;
+      letter-spacing: .02em;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      color: var(--text-muted) !important;
+      font-size: 11px !important;
+      font-weight: 650 !important;
+      letter-spacing: .09em !important;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--text-primary) !important;
+      font-size: clamp(20px, 2.4vw, 26px) !important;
+      font-weight: 720 !important;
+      line-height: 1.12;
+      letter-spacing: -.025em;
+    }
+
+    main {
+      max-width: 1180px !important;
+      margin: 0 auto;
+      padding: 22px 22px 40px !important;
+    }
+
+    .view-tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 18px;
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-panel) !important;
+      box-shadow: var(--shadow-panel), var(--shadow-elevated) !important;
+      overflow-x: auto;
+    }
+
+    .view-tab {
+      min-height: 34px;
+      padding: 7px 12px !important;
+      border: 1px solid transparent !important;
+      border-radius: 10px !important;
+      background: transparent !important;
+      color: var(--text-muted) !important;
+      box-shadow: none !important;
+      font-size: 12px !important;
+      font-weight: 650 !important;
+      letter-spacing: .005em;
+      white-space: nowrap;
+      transition: background .16s ease, color .16s ease, border-color .16s ease;
+    }
+
+    .view-tab:hover {
+      background: var(--bg-elevated) !important;
+      color: var(--text-secondary) !important;
+    }
+
+    .view-tab.is-active {
+      background: var(--bg-elevated) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-subtle) !important;
+      box-shadow: var(--shadow-panel) !important;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 8px 11px !important;
+      border-radius: 999px !important;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-panel) !important;
+      color: var(--text-secondary) !important;
+      box-shadow: var(--shadow-panel) !important;
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease, color .16s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-elevated) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-strong) !important;
+      transform: none !important;
+    }
+
+    .theme-toggle-icon {
+      width: 20px !important;
+      height: 20px !important;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--accent-soft) !important;
+      color: var(--accent-strong) !important;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .theme-toggle-text {
+      font-size: 12px !important;
+      font-weight: 650 !important;
+      white-space: nowrap;
+    }
+
+    .card {
+      position: relative;
+      margin-bottom: 16px !important;
+      padding: 20px !important;
+      overflow: hidden;
+      background: var(--bg-panel) !important;
+      border: 1px solid var(--border-subtle) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: var(--shadow-panel), var(--shadow-elevated) !important;
+    }
+
+    .card::before {
+      content: none !important;
+    }
+
+    .card.card-hero,
+    .summary-cards .metric,
+    .dropzone,
+    .advanced-body,
+    .action-panel,
+    .sticky-actions {
+      background: var(--bg-panel) !important;
+      border-color: var(--border-subtle) !important;
+      box-shadow: var(--shadow-panel), var(--shadow-elevated) !important;
+    }
+
+    .card.compact {
+      padding: 16px !important;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px !important;
+      color: var(--text-primary) !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      letter-spacing: -.015em;
+    }
+
+    h2::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, var(--border-subtle), transparent) !important;
+    }
+
+    .section-title-icon {
+      width: 28px !important;
+      height: 28px !important;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 28px;
+      border-radius: 9px !important;
+      color: var(--accent-strong) !important;
+      background: var(--accent-soft) !important;
+      border: 1px solid var(--border-accent) !important;
+      font-size: 12px !important;
+      box-shadow: var(--shadow-panel) !important;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 7px;
+      color: var(--text-muted) !important;
+      font-size: 12px !important;
+      font-weight: 650 !important;
+      line-height: 1.3;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 38px !important;
+      padding: 8px 11px !important;
+      border-radius: 11px !important;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-inset) !important;
+      color: var(--text-primary) !important;
+      outline: none;
+      box-shadow: var(--shadow-panel) !important;
+      transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+    }
+
+    input::placeholder {
+      color: var(--text-muted) !important;
+      opacity: .75;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--border-accent) !important;
+      box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow-panel) !important;
+      background: var(--bg-elevated) !important;
+    }
+
+    button {
+      min-height: 38px;
+      padding: 8px 13px !important;
+      border-radius: 11px !important;
+      border: 1px solid var(--border-subtle) !important;
+      background: var(--bg-elevated) !important;
+      color: var(--text-primary) !important;
+      font-weight: 650 !important;
+      box-shadow: var(--shadow-panel) !important;
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+    }
+
+    button:hover {
+      background: var(--accent-soft) !important;
+      border-color: var(--border-accent) !important;
+      transform: translateY(-1px);
+    }
+
+    button.ok,
+    .calculate-main {
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+      color: var(--text-inverse) !important;
+    }
+
+    html[data-theme="dark"] button.ok,
+    html[data-theme="dark"] .calculate-main {
+      color: #07100c !important;
+    }
+
+    button.secondary,
+    button.light {
+      background: var(--bg-elevated) !important;
+      color: var(--text-secondary) !important;
+    }
+
+    .badge,
+    .hour-pill,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-accent) !important;
+      background: var(--accent-soft) !important;
+      color: var(--accent-strong) !important;
+      font-size: 12px !important;
+      font-weight: 650 !important;
+      box-shadow: none !important;
+    }
+
+    .hint,
+    .empty-state {
+      color: var(--text-muted) !important;
+    }
+
+    .summary-cards.visual-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px !important;
+    }
+
+    .metric {
+      padding: 16px !important;
+      border: 1px solid var(--border-subtle) !important;
+      border-radius: 16px !important;
+      background: var(--bg-elevated) !important;
+      box-shadow: var(--shadow-panel) !important;
+    }
+
+    .metric .label {
+      color: var(--text-muted) !important;
+      font-size: 12px !important;
+      font-weight: 650 !important;
+    }
+
+    .metric .value {
+      color: var(--text-primary) !important;
+      font-size: 22px !important;
+      font-weight: 740 !important;
+      letter-spacing: -.03em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--bg-elevated) !important;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 10px 12px !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+      color: var(--text-primary);
+      font-size: 13px !important;
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--table-head) !important;
+      color: var(--text-muted) !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      letter-spacing: .055em;
+      white-space: nowrap;
+    }
+
+    td.number,
+    th.number {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    tbody tr:nth-child(even) td {
+      background-color: var(--table-row-alt) !important;
+    }
+
+    tbody tr:nth-child(odd) td {
+      background-color: var(--table-row) !important;
+    }
+
+    tbody tr:hover td {
+      background-color: var(--table-hover) !important;
+    }
+
+    tbody tr.is-domingo-festivo td,
+    tbody tr.formato-festivo td {
+      background: var(--festivo-bg) !important;
+      color: var(--festivo-text) !important;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--border-subtle) !important;
+      border-radius: 16px !important;
+      background: var(--bg-elevated) !important;
+      box-shadow: var(--shadow-panel) !important;
+      overflow: auto;
+    }
+
+    /* Colores de turnos con baja fatiga visual */
+    .turno-dia.color-descanso {
+      background: color-mix(in srgb, var(--bg-inset) 84%, #8a8f98) !important;
+      color: var(--text-secondary) !important;
+      border-color: var(--border-subtle) !important;
+    }
+
+    .turno-dia.color-m,
+    .turno-dia.color-4h,
+    .turno-dia.color-12h-dia {
+      background: color-mix(in srgb, var(--accent-soft) 70%, var(--bg-inset)) !important;
+      color: var(--accent-strong) !important;
+      border-color: var(--border-accent) !important;
+    }
+
+    .turno-dia.color-t,
+    .turno-dia.color-12h-tarde {
+      background: color-mix(in srgb, #3b82f6 13%, var(--bg-inset)) !important;
+      color: color-mix(in srgb, #3b82f6 70%, var(--text-primary)) !important;
+      border-color: color-mix(in srgb, #3b82f6 34%, var(--border-subtle)) !important;
+    }
+
+    .turno-dia.color-n,
+    .turno-dia.color-12h-noche {
+      background: color-mix(in srgb, #f59e0b 14%, var(--bg-inset)) !important;
+      color: color-mix(in srgb, #f59e0b 76%, var(--text-primary)) !important;
+      border-color: color-mix(in srgb, #f59e0b 34%, var(--border-subtle)) !important;
+    }
+
+    /* Formato Recargos refinado */
+    .formato-panel {
+      text-align: center;
+    }
+
+    .formato-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      border-radius: 16px !important;
+      background: var(--bg-elevated) !important;
+      border: 1px solid var(--border-subtle) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel {
+      min-width: 980px !important;
+      border-collapse: collapse !important;
+      border: 2px solid color-mix(in srgb, var(--border-strong) 74%, #000) !important;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--bg-elevated) !important;
+      box-shadow: none !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel th,
+    .tabla-formato-recargos.tabla-formato-excel td {
+      padding: 8px 9px !important;
+      text-align: center !important;
+      white-space: nowrap;
+      border-right: 1px solid var(--border-subtle) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+      color: var(--text-primary) !important;
+      background: var(--table-row) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead th {
+      background: var(--table-head) !important;
+      color: var(--text-secondary) !important;
+      font-weight: 700 !important;
+      letter-spacing: .055em;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th {
+      background: color-mix(in srgb, var(--table-head) 78%, var(--accent-soft)) !important;
+      color: var(--text-primary) !important;
+      border-bottom: 1px solid var(--border-strong) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th {
+      background: var(--bg-inset) !important;
+      color: var(--text-muted) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:nth-child(even) td {
+      background: var(--table-row-alt) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr:hover td {
+      background: var(--table-hover) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td {
+      background: var(--festivo-bg) !important;
+      color: var(--festivo-text) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .fecha-col,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha {
+      width: 82px !important;
+      min-width: 82px !important;
+      max-width: 82px !important;
+      padding-left: 6px !important;
+      padding-right: 6px !important;
+      text-align: center !important;
+      vertical-align: middle !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tbody td,
+    .tabla-formato-recargos.tabla-formato-excel tbody td.number,
+    .tabla-formato-recargos.tabla-formato-excel .formato-fecha,
+    .tabla-formato-recargos.tabla-formato-excel tfoot td.number {
+      font-weight: 400 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot td {
+      background: var(--bg-inset) !important;
+      color: var(--text-secondary) !important;
+      border-top: 1px solid var(--border-strong) !important;
+      font-weight: 700 !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .total-label {
+      text-align: right !important;
+      padding-right: 18px !important;
+      color: var(--text-primary) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td {
+      background: color-mix(in srgb, var(--bg-inset) 88%, var(--accent-soft)) !important;
+      color: var(--accent-strong) !important;
+      font-size: 10.5px !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-legend-row td {
+      background: var(--bg-elevated) !important;
+      color: var(--text-muted) !important;
+      text-align: left !important;
+      white-space: normal;
+      line-height: 1.45;
+      padding: 10px 12px !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel .formato-legend-row span {
+      display: block;
+      color: var(--text-muted) !important;
+      font-weight: 400 !important;
+    }
+
+    /* Líneas de agrupación, al estilo spreadsheet pero dentro del sistema visual */
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(1),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(5),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:first-child,
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:first-child {
+      border-right: 2px solid color-mix(in srgb, var(--border-strong) 76%, #000) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:first-child,
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(2),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(3),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(2) th:nth-child(3),
+    .tabla-formato-recargos.tabla-formato-excel thead tr:nth-child(3) th:nth-child(7),
+    .tabla-formato-recargos.tabla-formato-excel tbody td:nth-child(8),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-total-row td:nth-child(4),
+    .tabla-formato-recargos.tabla-formato-excel tfoot tr.formato-code-row td:nth-child(4) {
+      border-right: 2px solid var(--border-strong) !important;
+    }
+
+    .error-box {
+      background: var(--danger-soft) !important;
+      color: var(--danger) !important;
+      border-color: color-mix(in srgb, var(--danger) 34%, var(--border-subtle)) !important;
+    }
+
+    .ok-box {
+      background: var(--success-soft) !important;
+      color: var(--success) !important;
+      border-color: color-mix(in srgb, var(--success) 34%, var(--border-subtle)) !important;
+    }
+
+    @media (max-width: 900px) {
+      .summary-cards.visual-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        flex-wrap: wrap;
+        justify-content: center !important;
+      }
+
+      .brand,
+      .brand-centered {
+        justify-content: center !important;
+        text-align: center !important;
+      }
+
+      .theme-toggle {
+        margin-left: 0;
+      }
+
+      .theme-toggle-text {
+        display: none;
+      }
+
+      main {
+        padding-inline: 14px !important;
+      }
+    }
+
+
+
+    /* =========================================================
+       v23 · Paleta sobria gris + azul tecnológico
+       Basada en los tokens propuestos por el usuario
+       ========================================================= */
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+
+      /* Tokens base solicitados */
+      --bg-principal: #121212;
+      --bg-tarjetas: #1e1e1e;
+      --bg-hover: #2d2d2d;
+      --texto-principal: #e4e4e7;
+      --texto-secundario: #a1a1aa;
+      --borde-sutil: #333333;
+      --color-acento: #3b82f6;
+      --acento-hover: #2563eb;
+
+      /* Tokens semánticos de la app */
+      --bg-base: var(--bg-principal);
+      --bg-subtle: #171717;
+      --bg-panel: var(--bg-tarjetas);
+      --bg-elevated: #242424;
+      --bg-inset: #181818;
+
+      --text-primary: var(--texto-principal);
+      --text-secondary: #c7c7cc;
+      --text-muted: var(--texto-secundario);
+      --text-inverse: #f8fafc;
+
+      --border-subtle: var(--borde-sutil);
+      --border-strong: #454545;
+      --border-accent: rgba(59, 130, 246, .34);
+
+      --accent: var(--color-acento);
+      --accent-strong: #60a5fa;
+      --accent-soft: rgba(59, 130, 246, .14);
+      --accent-hover: rgba(37, 99, 235, .22);
+
+      --success: #22c55e;
+      --success-soft: #14251a;
+      --warning: #f59e0b;
+      --warning-soft: #2a2112;
+      --danger: #f87171;
+      --danger-soft: #2b1717;
+
+      --table-head: #202020;
+      --table-row: #181818;
+      --table-row-alt: #1c1c1c;
+      --table-hover: var(--bg-hover);
+      --festivo-bg: #2a2315;
+      --festivo-text: #f5c76b;
+
+      --bg: var(--bg-base);
+      --bg-soft: var(--bg-subtle);
+      --card: var(--bg-panel);
+      --card-solid: var(--bg-panel);
+      --text: var(--text-primary);
+      --muted: var(--text-muted);
+      --line: var(--border-subtle);
+      --line-strong: var(--border-strong);
+      --primary: var(--accent);
+      --primary-dark: var(--accent-strong);
+      --primary-soft: var(--accent-soft);
+      --input-bg: var(--bg-inset);
+      --header-bg: var(--bg-base);
+      --hover: var(--table-hover);
+    }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+
+      --bg-principal: #e7e9ee;
+      --bg-tarjetas: #f0f1f4;
+      --bg-hover: #dce3f2;
+      --texto-principal: #18181b;
+      --texto-secundario: #5f636b;
+      --borde-sutil: #c9cdd5;
+      --color-acento: #2563eb;
+      --acento-hover: #1d4ed8;
+
+      --bg-base: var(--bg-principal);
+      --bg-subtle: #eef0f4;
+      --bg-panel: var(--bg-tarjetas);
+      --bg-elevated: #f5f6f8;
+      --bg-inset: #e1e4ea;
+
+      --text-primary: var(--texto-principal);
+      --text-secondary: #383b42;
+      --text-muted: var(--texto-secundario);
+      --text-inverse: #f8fafc;
+
+      --border-subtle: var(--borde-sutil);
+      --border-strong: #aeb5c1;
+      --border-accent: rgba(37, 99, 235, .30);
+
+      --accent: var(--color-acento);
+      --accent-strong: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, .12);
+      --accent-hover: rgba(37, 99, 235, .18);
+
+      --success: #15803d;
+      --success-soft: #dcefe3;
+      --warning: #92400e;
+      --warning-soft: #eadfbf;
+      --danger: #b91c1c;
+      --danger-soft: #eedada;
+
+      --table-head: #dfe3ea;
+      --table-row: #eef0f4;
+      --table-row-alt: #e8ebf0;
+      --table-hover: var(--bg-hover);
+      --festivo-bg: #eadfbf;
+      --festivo-text: #5c4108;
+
+      --bg: var(--bg-base);
+      --bg-soft: var(--bg-subtle);
+      --card: var(--bg-panel);
+      --card-solid: var(--bg-panel);
+      --text: var(--text-primary);
+      --muted: var(--text-muted);
+      --line: var(--border-subtle);
+      --line-strong: var(--border-strong);
+      --primary: var(--accent);
+      --primary-dark: var(--accent-strong);
+      --primary-soft: var(--accent-soft);
+      --input-bg: var(--bg-inset);
+      --header-bg: var(--bg-base);
+      --hover: var(--table-hover);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 18% -18%, var(--accent-soft), transparent 28rem),
+        linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-base) 48%, var(--bg-base) 100%) !important;
+    }
+
+    .app-header {
+      background: color-mix(in srgb, var(--bg-base) 88%, transparent) !important;
+    }
+
+    .brand-mark,
+    .section-title-icon,
+    .theme-toggle-icon {
+      color: var(--accent-strong) !important;
+      background: var(--accent-soft) !important;
+      border-color: var(--border-accent) !important;
+    }
+
+    button.ok,
+    .calculate-main {
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+      color: var(--text-inverse) !important;
+    }
+
+    html[data-theme="dark"] button.ok,
+    html[data-theme="dark"] .calculate-main {
+      color: #eef6ff !important;
+    }
+
+    button.ok:hover,
+    .calculate-main:hover {
+      background: var(--acento-hover) !important;
+      border-color: var(--acento-hover) !important;
+    }
+
+    .view-tab.is-active,
+    .theme-toggle:hover,
+    button:hover {
+      background: var(--accent-soft) !important;
+      border-color: var(--border-accent) !important;
+    }
+
+    .badge,
+    .hour-pill,
+    .status-pill {
+      color: var(--accent-strong) !important;
+      background: var(--accent-soft) !important;
+      border-color: var(--border-accent) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel {
+      border-color: color-mix(in srgb, var(--border-strong) 80%, #000) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel thead tr:first-child th {
+      background: color-mix(in srgb, var(--table-head) 72%, var(--accent-soft)) !important;
+    }
+
+    .tabla-formato-recargos.tabla-formato-excel tfoot .formato-code-row td {
+      color: var(--accent-strong) !important;
+      background: color-mix(in srgb, var(--bg-inset) 82%, var(--accent-soft)) !important;
+    }
+
+    html[data-theme="dark"] .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td,
+    html[data-theme="dark"] tbody tr.is-domingo-festivo td {
+      background: #2a2315 !important;
+      color: #f5c76b !important;
+    }
+
+    html[data-theme="light"] .tabla-formato-recargos.tabla-formato-excel tbody tr.formato-festivo td,
+    html[data-theme="light"] tbody tr.is-domingo-festivo td {
+      background: #eadfbf !important;
+      color: #5c4108 !important;
+    }
+
 </style>
 </head>
 
-<body class="login-active">
-<section id="loginScreen" class="login-screen" aria-label="Inicio de sesión">
-  <div class="login-card">
-    <div class="login-brand">
-      <div class="brand-mark" aria-hidden="true">RH</div>
-      <div>
-        <div class="eyebrow">Acceso restringido</div>
-        <h2 class="login-title">Liquidación laboral</h2>
-        <p class="login-subtitle">Inicia sesión para acceder a la calculadora de recargos y horas extra.</p>
-      </div>
-    </div>
-    <form class="login-form" onsubmit="iniciarSesion(event)">
-      <div>
-        <label for="loginUsuario">Usuario</label>
-        <input id="loginUsuario" type="text" autocomplete="username" placeholder="Ingresa tu usuario" required>
-      </div>
-      <div>
-        <label for="loginPassword">Contraseña</label>
-        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" required>
-      </div>
-      <div id="loginError" class="login-error" role="alert">Usuario o contraseña incorrectos.</div>
-      <button type="submit">INGRESAR</button>
-    </form>
-  </div>
-</section>
-
-<div id="appShell" class="app-shell is-locked" aria-hidden="true">
+<body>
+<div id="appShell" class="app-shell" aria-hidden="false">
 <header class="app-header">
-  <div class="header-inner">
-    <div class="brand">
+  <div class="header-inner header-centered">
+    <div class="brand brand-centered">
       <div class="brand-mark" aria-hidden="true">RH</div>
       <div>
-        <div class="eyebrow">Liquidación laboral</div>
+        <div class="eyebrow">Liquidación de turnos</div>
         <h1>Recargos y horas extra</h1>
       </div>
     </div>
-    <div class="header-actions">
-      <span class="user-chip"><span class="user-dot"></span>admin</span>
-      <button class="light" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
-      <button id="btnTema" class="light" type="button" onclick="alternarTema()">Modo oscuro</button>
-    </div>
+    <button type="button" id="themeToggle" class="theme-toggle no-print" onclick="alternarTema()" aria-label="Cambiar modo visual" title="Cambiar modo visual">
+      <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+      <span class="theme-toggle-text">Claro</span>
+    </button>
   </div>
 </header>
 
 <main>
-  <nav class="stepper no-print" aria-label="Pasos de la liquidación">
-    <a href="#pasoDatos"><span class="step-number">1</span><span>Datos</span></a>
-    <a href="#pasoTurnos"><span class="step-number">2</span><span>Turnos</span></a>
-    <a href="#pasoResumen"><span class="step-number">3</span><span>Resumen</span></a>
-    <a href="#pasoResultado"><span class="step-number">4</span><span>Resultado</span></a>
+  <nav class="view-tabs no-print" aria-label="Vistas principales">
+    <button type="button" class="view-tab is-active" data-view="turnos" onclick="cambiarVista('turnos')">Turnos</button>
+    <button type="button" class="view-tab" data-view="resumen" onclick="cambiarVista('resumen')">Resumen</button>
+    <button type="button" class="view-tab" data-view="resultado" onclick="cambiarVista('resultado')">Resultado</button>
+    <button type="button" class="view-tab" data-view="formato" onclick="cambiarVista('formato')">Formato Recargos</button>
+    <button type="button" class="view-tab" data-view="configuracion" onclick="cambiarVista('configuracion')">Configuración</button>
   </nav>
-  <section id="pasoDatos" class="card card-hero">
+
+  <section id="pasoDatos" class="card card-hero view-panel view-turnos is-active">
     <h2><span class="section-title-icon">◉</span>1. Datos generales</h2>
     <div class="grid cols-2">
       <div>
         <label for="salario">Salario básico mensual</label>
-        <input id="salario" value="1990000">
-        <div class="hint">Ingresa el salario base para calcular recargos, horas extra y resumen estimado.</div>
+        <input id="salario" value="" inputmode="decimal" placeholder="$0">
       </div>
       <div>
         <label>Valor hora</label>
-        <div id="valorHoraTexto" class="hour-pill large">Valor hora: $9.045,45</div>
-        <div class="hint">Calculado automáticamente con base en el salario mensual.</div>
+        <div id="valorHoraTexto" class="hour-pill large">Valor hora: —</div>
       </div>
     </div>
 
@@ -1244,8 +4868,8 @@
     <input type="hidden" id="valorHoraVista" value="">
   </section>
 
-  <details class="advanced no-print">
-    <summary>⚙ Configuración avanzada</summary>
+  <section id="pasoConfiguracion" class="card no-print view-panel view-configuracion config-panel">
+    <h2><span class="section-title-icon">⚙</span>Configuración avanzada</h2>
     <div class="advanced-body">
       <div class="grid cols-4">
         <div><label>RECARGO NOCTURNO 035</label><input id="pRN" value="0,35"></div>
@@ -1256,20 +4880,20 @@
         <div><label>H.E.D.DOMINICAL/FESTIVO 215</label><input id="pHEDF" value="2,15"></div>
         <div><label>H.E.N.DOMINICAL/FESTIVO 265</label><input id="pHENF" value="2,65"></div>
       </div>
-      <div class="hint">Se dejan ocultos porque normalmente no necesitas modificarlos. Desde julio de 2026 el recargo dominical/festivo queda parametrizado al 90%.</div>
+      <div class="hint">Parámetros internos de cálculo. Úsalos solo cuando necesites revisar o ajustar la configuración.</div>
     </div>
-  </details>
+  </section>
 
-  <section id="pasoTurnos" class="card no-print">
+  <section id="pasoTurnos" class="card no-print view-panel view-turnos is-active">
     <h2><span class="section-title-icon">▦</span>2. Ingreso de turnos</h2>
     <div class="grid cols-4" style="margin-bottom:14px;">
       <div>
         <label for="fechaInicioTurno">Fecha inicio</label>
-        <input id="fechaInicioTurno" type="date" value="2026-07-01">
+        <input id="fechaInicioTurno" type="date">
       </div>
       <div>
         <label for="fechaFinTurno">Fecha fin</label>
-        <input id="fechaFinTurno" type="date" value="2026-07-31">
+        <input id="fechaFinTurno" type="date">
       </div>
       <div class="button-field">
         <label aria-hidden="true">Acción</label>
@@ -1277,13 +4901,8 @@
       </div>
       <div class="button-field">
         <label aria-hidden="true">Acción</label>
-        <button type="button" class="light" onclick="limpiarCalendario()">Limpiar lista</button>
+        <button type="button" class="light" onclick="confirmarLimpiarLista()">Limpiar lista</button>
       </div>
-    </div>
-
-    <div class="period-strip">
-      <strong id="resumenPeriodoTitulo">Periodo seleccionado</strong>
-      <span id="resumenPeriodo">0 días · 0 turnos · 0 descansos · 0 domingos/festivos</span>
     </div>
 
     <div class="turno-legend" aria-label="Leyenda de turnos">
@@ -1322,17 +4941,18 @@
         <tbody></tbody>
       </table>
     </div>
-    <div class="hint" style="margin-top:8px;">
-      Los domingos y festivos se resaltan. Los horarios cambian de color. Para descanso, selecciona DESCANSO en Horario.
-    </div>
   </section>
 
-  <section id="pasoResumen" class="card">
+  <section id="pasoResumen" class="card view-panel view-resumen">
     <h2><span class="section-title-icon">$</span>3. Resumen</h2>
     <div class="summary-cards visual-summary">
+      <div class="metric neto-card">
+        <div class="label">Neto estimado</div>
+        <div class="value" id="cardNeto">$0</div>
+      </div>
       <div class="metric">
-        <div class="label">Salario base</div>
-        <div class="value" id="cardSalarioBase">$0</div>
+        <div class="label">Total pago</div>
+        <div class="value" id="cardTotalPago">$0</div>
       </div>
       <div class="metric">
         <div class="label">Recargos + horas extra</div>
@@ -1341,10 +4961,6 @@
       <div class="metric">
         <div class="label">Descuentos</div>
         <div class="value" id="cardDescuentos">$0</div>
-      </div>
-      <div class="metric neto-card">
-        <div class="label">Neto estimado</div>
-        <div class="value" id="cardNeto">$0</div>
       </div>
     </div>
     <div class="table-wrap">
@@ -1379,7 +4995,7 @@
     </div>
   </section>
 
-  <section id="pasoResultado" class="card">
+  <section id="pasoResultado" class="card view-panel view-resultado">
     <h2><span class="section-title-icon">≡</span>4. Resultado</h2>
     <span class="badge" id="contadorResultado">0 registros</span>
     <div class="table-wrap" style="margin-top:12px;">
@@ -1388,7 +5004,6 @@
           <tr>
             <th>NOMBRE CONCEPTO</th>
             <th class="number">No de HORAS</th>
-            <th class="number">VALOR ESTIMADO</th>
             <th>Fecha y hora de inicio de la HHEE</th>
             <th>Fecha y hora de finalización de la HHEE</th>
           </tr>
@@ -1398,16 +5013,104 @@
     </div>
   </section>
 
-  <section class="card compact no-print sticky-actions">
-    <div class="actions-modern">
+  <section id="pasoFormatoRecargos" class="card view-panel view-formato formato-panel">
+    <h2><span class="section-title-icon">▤</span>Formato Recargos</h2>
+    <div class="table-wrap formato-wrap" style="margin-top:12px;">
+      <table id="tablaFormatoRecargos" class="tabla-formato-recargos tabla-formato-excel">
+        <thead>
+          <tr>
+            <th rowspan="3" class="fecha-col">DIA</th>
+            <th colspan="4">JORNADA ORDINARIA</th>
+            <th colspan="7">LIQUIDACIÓN HORAS</th>
+          </tr>
+          <tr>
+            <th colspan="2">DESDE</th>
+            <th colspan="2">HASTA</th>
+            <th colspan="3">RECARGOS</th>
+            <th colspan="4">HORAS EXTRAS</th>
+          </tr>
+          <tr>
+            <th>AM</th>
+            <th>PM</th>
+            <th>AM</th>
+            <th>PM</th>
+            <th title="RECARGO NOCTURNO 035">NO</th>
+            <th title="RECARGO NOCTURNO FESTIVO 125">NF</th>
+            <th title="RECARGO DIURNO FESTIVO 90">DF</th>
+            <th title="HORAS EXTRAS DIURNAS 125">DO</th>
+            <th title="H.E.D.DOMINICAL/FESTIVO 215">DF</th>
+            <th title="HORAS EXTRAS NOCTURNAS 175">NO</th>
+            <th title="H.E.N.DOMINICAL/FESTIVO 265">NF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="12" class="empty-state">No hay datos calculados</td></tr>
+        </tbody>
+        <tfoot>
+          <tr class="formato-total-row">
+            <td colspan="5" class="total-label">TOTAL</td>
+            <td class="number" id="totalFormatoRN"></td>
+            <td class="number" id="totalFormatoRNF"></td>
+            <td class="number" id="totalFormatoRDF"></td>
+            <td class="number" id="totalFormatoHED"></td>
+            <td class="number" id="totalFormatoHEDF"></td>
+            <td class="number" id="totalFormatoHEN"></td>
+            <td class="number" id="totalFormatoHENF"></td>
+          </tr>
+          <tr class="formato-code-row">
+            <td colspan="5"></td>
+            <td>NO</td>
+            <td>NF</td>
+            <td>DF</td>
+            <td>DO</td>
+            <td>DF</td>
+            <td>NO</td>
+            <td>NF</td>
+          </tr>
+          <tr class="formato-legend-row">
+            <td colspan="12">
+              <span>Recargos: NO = Nocturno ordinario · NF = Nocturno festivo · DF = Diurno festivo</span>
+              <span>Horas extras: DO = Diurna ordinaria · DF = Diurna festiva · NO = Nocturna ordinaria · NF = Nocturna festiva</span>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section class="card compact no-print sticky-actions view-actions view-turnos is-active">
+    <div class="actions-modern actions-turnos">
       <div class="action-primary-box">
-        <button type="button" class="ok calculate-main" onclick="calcular()">CALCULAR LIQUIDACIÓN</button>
+        <button type="button" class="ok calculate-main" onclick="calcular()">Calcular liquidación</button>
       </div>
+    </div>
+  </section>
+
+  <section class="card compact no-print sticky-actions view-actions view-resumen">
+    <div class="actions-modern actions-secondary-only">
       <div class="action-secondary-box">
-        <button type="button" class="light" onclick="limpiarResultado()">Limpiar resultado</button>
-        <button type="button" class="secondary" onclick="exportarCSV()">Exportar CSV</button>
-        <button type="button" class="secondary" onclick="copiarTabla()">Copiar tabla</button>
-        <button type="button" class="secondary" onclick="window.print()">Imprimir</button>
+        <button type="button" class="secondary" onclick="copiarResumen()">Copiar resumen</button>
+        <button type="button" class="secondary" onclick="imprimirVista('resumen')">Imprimir resumen</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card compact no-print sticky-actions view-actions view-resultado">
+    <div class="actions-modern actions-secondary-only">
+      <div class="action-secondary-box">
+        <button type="button" class="light" onclick="confirmarLimpiarResultado()">Limpiar resultado</button>
+        <button type="button" class="secondary" onclick="exportarCSV()">Exportar resultado</button>
+        <button type="button" class="secondary" onclick="copiarTabla()">Copiar resultado</button>
+        <button type="button" class="secondary" onclick="imprimirVista('resultado')">Imprimir resultado</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card compact no-print action-panel view-actions view-formato">
+    <div class="actions-modern actions-secondary-only">
+      <div class="action-secondary-box">
+        <button type="button" class="secondary" onclick="copiarFormatoRecargos()">Copiar formato</button>
+        <button type="button" class="secondary" onclick="imprimirVista('formato')">Imprimir formato</button>
       </div>
     </div>
   </section>
@@ -1442,7 +5145,18 @@ const CONCEPTOS = {
   HENF: "H.E.N.DOMINICAL/FESTIVO 265"
 };
 
+const FORMATO_RECARGOS_COLUMNAS = [
+  {key:"RN", codigo:"NO", concepto: CONCEPTOS.RN},
+  {key:"RNF", codigo:"NF", concepto: CONCEPTOS.RNF},
+  {key:"RDF", codigo:"DF", concepto: CONCEPTOS.RDF},
+  {key:"HED", codigo:"DO", concepto: CONCEPTOS.HED},
+  {key:"HEDF", codigo:"DF", concepto: CONCEPTOS.HEDF},
+  {key:"HEN", codigo:"NO", concepto: CONCEPTOS.HEN},
+  {key:"HENF", codigo:"NF", concepto: CONCEPTOS.HENF}
+];
+
 let resultadoActual = [];
+let mensajeOkTimer = null;
 
 // Festivos sugeridos Colombia 2026. Son editables: puede desmarcarlos o marcar otros manualmente.
 const FESTIVOS_PRE_CARGADOS = new Set([
@@ -1455,16 +5169,39 @@ const FESTIVOS_PRE_CARGADOS = new Set([
 const PLANTILLA_TURNOS_XLSX_BASE64 = "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";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const salarioInput = document.getElementById("salario");
+  formatearSalarioInput();
   actualizarValorHoraVista();
-  document.getElementById("salario").addEventListener("input", () => {
+
+  salarioInput?.addEventListener("input", () => {
     actualizarValorHoraVista();
     pintarResumen(resultadoActual || []);
   });
+
+  salarioInput?.addEventListener("blur", () => {
+    formatearSalarioInput();
+    actualizarValorHoraVista();
+    pintarResumen(resultadoActual || []);
+  });
+
+  salarioInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    formatearSalarioInput();
+    actualizarValorHoraVista();
+    pintarResumen(resultadoActual || []);
+    salarioInput.blur();
+  });
+
+  salarioInput?.addEventListener("focus", () => salarioInput.select());
+
   ["auxTransporte","porcSalud","porcPension","diasPago"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("input", () => pintarResumen(resultadoActual || []));
   });
-  generarCalendario();
+
+  // La lista inicia vacía. El usuario genera el rango cuando seleccione fechas.
+  actualizarResumenPeriodo();
 
   const tbody = document.querySelector("#tablaCalendario tbody");
   tbody.addEventListener("change", (e) => {
@@ -1486,14 +5223,24 @@ function normalizarTexto(txt){
 
 function numeroDesdeTexto(valor){
   if (valor === null || valor === undefined) return 0;
-  let s = String(valor).trim();
+
+  let s = String(valor)
+    .trim()
+    .replace(/\s/g, "")
+    .replace(/\$/g, "")
+    .replace(/[^0-9,.-]/g, "");
+
   if (!s) return 0;
-  s = s.replace(/\$/g, "").replace(/\s/g, "");
-  if (s.includes(",") && s.includes(".")) {
+
+  if (s.includes(",")) {
     s = s.replace(/\./g, "").replace(",", ".");
-  } else if (s.includes(",")) {
-    s = s.replace(",", ".");
+  } else {
+    const puntos = (s.match(/\./g) || []).length;
+    if (puntos > 1 || /^-?\d{1,3}(\.\d{3})+$/.test(s)) {
+      s = s.replace(/\./g, "");
+    }
   }
+
   return Number(s) || 0;
 }
 
@@ -1504,10 +5251,11 @@ function obtenerValorHora(){
 }
 
 function actualizarValorHoraVista(){
-  const vh = obtenerValorHora();
-  const texto = isFinite(vh) ? formatoMoneda(vh, true) : "";
+  const salario = numeroDesdeTexto(document.getElementById("salario")?.value || "");
+  const vh = salario ? salario / 220 : 0;
+  const texto = salario && isFinite(vh) ? formatoMoneda(vh, true) : "";
   const el = document.getElementById("valorHoraTexto");
-  if (el) el.textContent = texto ? `Valor hora: ${texto}` : "";
+  if (el) el.textContent = texto ? `Valor hora: ${texto}` : "Valor hora: —";
   const input = document.getElementById("valorHoraVista");
   if (input) input.value = texto;
 }
@@ -1518,6 +5266,13 @@ function formatoMoneda(valor, decimales=false){
     return "$" + n.toLocaleString("es-CO", {minimumFractionDigits:2, maximumFractionDigits:2});
   }
   return "$" + Math.round(n).toLocaleString("es-CO");
+}
+
+function formatearSalarioInput(){
+  const input = document.getElementById("salario");
+  if (!input) return;
+  const n = numeroDesdeTexto(input.value);
+  input.value = n ? formatoMoneda(n, false) : "";
 }
 
 function formatoHoras(h){
@@ -1754,7 +5509,7 @@ function generarCalendario(){
 
   tbody.innerHTML = "";
 
-  const NOMBRES_DIA = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const NOMBRES_DIA = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
   const TURNOS_OPCIONES = [
   ["DESCANSO", "DESCANSO"],
   ["06:00 - 14:00", "06:00 - 14:00"],
@@ -2123,9 +5878,11 @@ function calcular(){
   resultadoActual = agrupados;
   pintarResultado(agrupados);
   pintarResumen(agrupados);
+  pintarFormatoRecargos(agrupados);
   mostrarOk(agrupados.length
     ? `Cálculo finalizado. Registros generados: ${agrupados.length}.`
     : "Cálculo finalizado. Los turnos seleccionados no generan recargos ni horas extra.");
+  cambiarVista("resultado");
 }
 
 function agruparSegmentos(segmentos, valorHora, factores){
@@ -2159,7 +5916,6 @@ function pintarResultado(rows){
     tr.innerHTML = `
       <td><span class="concept-pill">${escapeHtml(r.concepto)}</span></td>
       <td class="number">${formatoHoras(r.horas)}</td>
-      <td class="number">${formatoMoneda(r.valor)}</td>
       <td>${formatoFechaHora(r.inicio)}</td>
       <td>${formatoFechaHora(r.fin)}</td>
     `;
@@ -2167,6 +5923,156 @@ function pintarResultado(rows){
   }
 
   document.getElementById("contadorResultado").textContent = `${rows.length} registros | ${formatoHoras(totalHorasResultado(rows))} horas`;
+}
+
+
+function formatoFechaFormatoRecargos(d){
+  const meses = ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic."];
+  return `${d.getDate()}-${meses[d.getMonth()]}-${String(d.getFullYear()).slice(-2)}`;
+}
+
+function formatoHoraTabla(hora){
+  if (!hora) return "";
+  return `${pad2(hora.hh)}:${pad2(hora.mm)}`;
+}
+
+function grupoAmPm(hora){
+  if (!hora) return "";
+  return hora.hh < 12 ? "AM" : "PM";
+}
+
+function celdasVaciasFormato(){
+  return {
+    joDesdeAM:"", joDesdePM:"", joHastaAM:"", joHastaPM:""
+  };
+}
+
+function celdasJornadaOrdinaria(turnoTxt){
+  const out = celdasVaciasFormato();
+  const turno = parsearTurno(turnoTxt);
+  if (turno.tipo !== "turno") return out;
+
+  const desdeGrupo = grupoAmPm(turno.inicio);
+  const hastaGrupo = grupoAmPm(turno.fin);
+
+  out[`joDesde${desdeGrupo}`] = formatoHoraTabla(turno.inicio);
+  out[`joHasta${hastaGrupo}`] = formatoHoraTabla(turno.fin);
+  return out;
+}
+
+function datosBaseFormatoRecargos(festivosSet){
+  const mapa = new Map();
+
+  document.querySelectorAll("#tablaCalendario tbody tr").forEach(tr => {
+    const fechaTxt = tr.children[2]?.textContent.trim() || "";
+    const fecha = parsearFecha(fechaTxt);
+    if (!fecha) return;
+
+    const key = fechaKey(fecha);
+    const turno = tr.querySelector(".turno-dia")?.value || "";
+    const festivoMarcado = Boolean(tr.querySelector(".festivo-dia")?.checked);
+    const item = {
+      fecha,
+      turno,
+      festivo: festivoMarcado || fecha.getDay() === 0 || Boolean(festivosSet?.has(key)),
+      total: 0,
+      ...celdasJornadaOrdinaria(turno)
+    };
+    FORMATO_RECARGOS_COLUMNAS.forEach(c => item[c.key] = 0);
+    mapa.set(key, item);
+  });
+
+  return mapa;
+}
+
+function sumarSegmentoFormato(mapa, segmento, festivosSet){
+  const columna = FORMATO_RECARGOS_COLUMNAS.find(c => c.concepto === segmento.concepto);
+  if (!columna) return;
+
+  let cursor = new Date(segmento.inicio.getTime());
+  const fin = new Date(segmento.fin.getTime());
+
+  while (cursor < fin) {
+    const corte = siguienteMedianoche(cursor);
+    const hasta = corte < fin ? corte : fin;
+    const horas = (hasta - cursor) / MS_HORA;
+    const fecha = soloFecha(cursor);
+    const key = fechaKey(fecha);
+
+    if (!mapa.has(key)) {
+      const item = {
+        fecha,
+        turno: "",
+        festivo: fecha.getDay() === 0 || Boolean(festivosSet?.has(key)),
+        total: 0,
+        ...celdasVaciasFormato()
+      };
+      FORMATO_RECARGOS_COLUMNAS.forEach(c => item[c.key] = 0);
+      mapa.set(key, item);
+    }
+
+    const item = mapa.get(key);
+    item[columna.key] += horas;
+    item.total += horas;
+    cursor = hasta;
+  }
+}
+
+function valorFormatoCelda(valor){
+  const n = Number(valor) || 0;
+  return n > 0 ? formatoHoras(n) : "";
+}
+
+function pintarFormatoRecargos(rows){
+  const tbody = document.querySelector("#tablaFormatoRecargos tbody");
+  if (!tbody) return;
+
+  const fest = obtenerFestivos();
+  const mapa = datosBaseFormatoRecargos(fest.set);
+  rows.forEach(r => sumarSegmentoFormato(mapa, r, fest.set));
+
+  const datos = Array.from(mapa.values())
+    .filter(item => (Number(item.total) || 0) > 0)
+    .sort((a,b) => a.fecha - b.fecha);
+  const totales = {};
+  FORMATO_RECARGOS_COLUMNAS.forEach(c => totales[c.key] = 0);
+
+  tbody.innerHTML = "";
+
+  if (!datos.length) {
+    tbody.innerHTML = `<tr><td colspan="12" class="empty-state">No hay recargos ni horas extra para mostrar</td></tr>`;
+  } else {
+    datos.forEach(item => {
+      FORMATO_RECARGOS_COLUMNAS.forEach(c => totales[c.key] += item[c.key]);
+
+      const tr = document.createElement("tr");
+      if (item.festivo) tr.classList.add("formato-festivo");
+      tr.innerHTML = `
+        <td class="formato-fecha">${formatoFechaFormatoRecargos(item.fecha)}</td>
+        <td>${escapeHtml(item.joDesdeAM)}</td>
+        <td>${escapeHtml(item.joDesdePM)}</td>
+        <td>${escapeHtml(item.joHastaAM)}</td>
+        <td>${escapeHtml(item.joHastaPM)}</td>
+        <td class="number concepto-recargo">${valorFormatoCelda(item.RN)}</td>
+        <td class="number concepto-recargo">${valorFormatoCelda(item.RNF)}</td>
+        <td class="number concepto-recargo">${valorFormatoCelda(item.RDF)}</td>
+        <td class="number concepto-extra">${valorFormatoCelda(item.HED)}</td>
+        <td class="number concepto-extra">${valorFormatoCelda(item.HEDF)}</td>
+        <td class="number concepto-extra">${valorFormatoCelda(item.HEN)}</td>
+        <td class="number concepto-extra">${valorFormatoCelda(item.HENF)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  FORMATO_RECARGOS_COLUMNAS.forEach(c => {
+    const celda = document.getElementById(`totalFormato${c.key}`);
+    if (celda) celda.textContent = valorFormatoCelda(totales[c.key]);
+  });
+
+  const totalHoras = FORMATO_RECARGOS_COLUMNAS.reduce((acc, c) => acc + (Number(totales[c.key]) || 0), 0);
+  const contador = document.getElementById("contadorFormatoRecargos");
+  if (contador) contador.textContent = `${datos.length} fechas | ${formatoHoras(totalHoras)} horas`;
 }
 
 function normalizarClave(txt){
@@ -2526,8 +6432,7 @@ function aplicarRegistrosImportados(registros){
   }
 
   actualizarResumenPeriodo();
-  calcular();
-  mostrarOk(`Archivo importado correctamente. Registros aplicados: ${aplicados}. Días no incluidos: DESCANSO.`);
+  return {aplicados};
 }
 
 async function importarArchivoTurnos(event){
@@ -2547,11 +6452,18 @@ async function importarArchivoTurnos(event){
     }
 
     const {registros, errores} = matrizARegistrosTurnos(matriz);
-    aplicarRegistrosImportados(registros);
+    const importacion = aplicarRegistrosImportados(registros);
 
     if (errores.length) {
       mostrarErrores(["Archivo importado con observaciones:", ...errores.slice(0, 8)]);
+      return;
     }
+
+    mostrarOk(`Archivo importado correctamente. Registros aplicados: ${importacion.aplicados}. Calculando...`);
+
+    setTimeout(() => {
+      calcular();
+    }, 80);
   } catch (err) {
     mostrarErrores([`No se pudo importar el archivo: ${err.message || err}`]);
   } finally {
@@ -2658,11 +6570,11 @@ function pintarResumen(rows){
   document.getElementById("totalDescuentoResumen").textContent = formatoMoneda(totalDescuento);
   document.getElementById("netoResumen").textContent = formatoMoneda(neto);
 
-  const cardSalario = document.getElementById("cardSalarioBase");
+  const cardTotalPago = document.getElementById("cardTotalPago");
   const cardRecargos = document.getElementById("cardRecargos");
   const cardDescuentos = document.getElementById("cardDescuentos");
   const cardNeto = document.getElementById("cardNeto");
-  if (cardSalario) cardSalario.textContent = formatoMoneda(salario);
+  if (cardTotalPago) cardTotalPago.textContent = formatoMoneda(totalPago);
   if (cardRecargos) cardRecargos.textContent = formatoMoneda(totalRecargos);
   if (cardDescuentos) cardDescuentos.textContent = formatoMoneda(totalDescuento);
   if (cardNeto) cardNeto.textContent = formatoMoneda(neto);
@@ -2673,35 +6585,74 @@ function limpiarResultado(){
   document.querySelector("#tablaResultado tbody").innerHTML = "";
   document.getElementById("contadorResultado").textContent = "0 registros";
   pintarResumen([]);
+  pintarFormatoRecargos([]);
   limpiarMensajes();
 }
 
 function limpiarMensajes(){
   const e = document.getElementById("mensajesError");
   const o = document.getElementById("mensajesOk");
+  if (mensajeOkTimer) {
+    clearTimeout(mensajeOkTimer);
+    mensajeOkTimer = null;
+  }
   if (e) { e.style.display = "none"; e.textContent = ""; }
   if (o) { o.style.display = "none"; o.textContent = ""; }
 }
 
+function resumirErrores(lista){
+  const errores = Array.isArray(lista) ? lista.filter(Boolean) : [];
+  if (!errores.length) return "";
+
+  const erroresHorario = errores.filter(x => /Fila\s+\d+\s*\([^)]*\):\s*seleccione un horario o DESCANSO/i.test(x));
+  if (erroresHorario.length === errores.length) {
+    return `Hay ${erroresHorario.length} días sin horario. Seleccione un horario o DESCANSO para poder calcular.`;
+  }
+
+  if (errores.length > 3) {
+    return `Hay ${errores.length} validaciones pendientes. Revise salario, fechas y turnos antes de calcular.`;
+  }
+
+  return errores.join("\n");
+}
+
 function mostrarErrores(lista){
   const e = document.getElementById("mensajesError");
+  const o = document.getElementById("mensajesOk");
+  if (mensajeOkTimer) {
+    clearTimeout(mensajeOkTimer);
+    mensajeOkTimer = null;
+  }
+  if (o) { o.style.display = "none"; o.textContent = ""; }
   if (!e) return;
-  e.textContent = lista.join("\n");
+  e.textContent = resumirErrores(lista);
   e.style.display = "block";
 }
 
-function mostrarOk(txt){
+function mostrarOk(txt, autoCerrar=true){
   const o = document.getElementById("mensajesOk");
+  const e = document.getElementById("mensajesError");
+  if (mensajeOkTimer) {
+    clearTimeout(mensajeOkTimer);
+    mensajeOkTimer = null;
+  }
+  if (e) { e.style.display = "none"; e.textContent = ""; }
   if (!o) return;
   o.textContent = txt;
   o.style.display = "block";
+  if (autoCerrar) {
+    mensajeOkTimer = setTimeout(() => {
+      o.style.display = "none";
+      o.textContent = "";
+      mensajeOkTimer = null;
+    }, 4200);
+  }
 }
 
 function filasResultadoComoArray(){
   return resultadoActual.map(r => ({
     "NOMBRE CONCEPTO": r.concepto,
     "No de HORAS": formatoHoras(r.horas),
-    "VALOR ESTIMADO": formatoMoneda(r.valor),
     "Fecha y hora de inicio de la HHEE": formatoFechaHora(r.inicio),
     "Fecha y hora de finalización de la HHEE": formatoFechaHora(r.fin)
   }));
@@ -2716,7 +6667,6 @@ function exportarCSV(){
   const headers = [
     "NOMBRE CONCEPTO",
     "No de HORAS",
-    "VALOR ESTIMADO",
     "Fecha y hora de inicio de la HHEE",
     "Fecha y hora de finalización de la HHEE"
   ];
@@ -2752,7 +6702,6 @@ async function copiarTabla(){
   const headers = [
     "NOMBRE CONCEPTO",
     "No de HORAS",
-    "VALOR ESTIMADO",
     "Fecha y hora de inicio de la HHEE",
     "Fecha y hora de finalización de la HHEE"
   ];
@@ -2777,81 +6726,22 @@ async function copiarTabla(){
 }
 
 
-const LOGIN_USUARIO = "admin";
-const LOGIN_PASSWORD = "1234";
-let SESION_LOCAL_ACTIVA = false;
-
-function guardarEstadoSesion(activa){
-  SESION_LOCAL_ACTIVA = Boolean(activa);
-  try {
-    if (activa) sessionStorage.setItem("recargosSesion", "activa");
-    else sessionStorage.removeItem("recargosSesion");
-  } catch (_) {
-    // En algunos navegadores los archivos file:// no permiten sessionStorage.
-  }
-}
-
-function haySesionActiva(){
-  try {
-    return sessionStorage.getItem("recargosSesion") === "activa" || SESION_LOCAL_ACTIVA;
-  } catch (_) {
-    return SESION_LOCAL_ACTIVA;
-  }
-}
-
-function mostrarAplicacion(){
-  const login = document.getElementById("loginScreen");
-  const app = document.getElementById("appShell");
-  if (login) login.hidden = true;
-  if (app) {
-    app.classList.remove("is-locked");
-    app.setAttribute("aria-hidden", "false");
-  }
-  document.body.classList.remove("login-active");
-}
-
-function mostrarLogin(){
-  const login = document.getElementById("loginScreen");
-  const app = document.getElementById("appShell");
-  if (login) login.hidden = false;
-  if (app) {
-    app.classList.add("is-locked");
-    app.setAttribute("aria-hidden", "true");
-  }
-  document.body.classList.add("login-active");
-  const usuario = document.getElementById("loginUsuario");
-  const clave = document.getElementById("loginPassword");
-  const error = document.getElementById("loginError");
-  if (clave) clave.value = "";
-  if (error) error.style.display = "none";
-  setTimeout(() => usuario?.focus(), 30);
-}
-
-function iniciarSesion(event){
-  event?.preventDefault();
-  const usuario = document.getElementById("loginUsuario")?.value.trim() || "";
-  const clave = document.getElementById("loginPassword")?.value || "";
-  const error = document.getElementById("loginError");
-
-  if (usuario === LOGIN_USUARIO && clave === LOGIN_PASSWORD) {
-    guardarEstadoSesion(true);
-    if (error) error.style.display = "none";
-    mostrarAplicacion();
+function confirmarLimpiarLista(){
+  if (!document.querySelectorAll("#tablaCalendario tbody tr").length) {
+    limpiarCalendario();
     return;
   }
-
-  if (error) error.style.display = "block";
-  document.getElementById("loginPassword")?.focus();
+  if (!confirm("¿Desea limpiar toda la lista de turnos?")) return;
+  limpiarCalendario();
 }
 
-function cerrarSesion(){
-  guardarEstadoSesion(false);
-  mostrarLogin();
-}
-
-function prepararAcceso(){
-  if (haySesionActiva()) mostrarAplicacion();
-  else mostrarLogin();
+function confirmarLimpiarResultado(){
+  if (!resultadoActual.length) {
+    limpiarResultado();
+    return;
+  }
+  if (!confirm("¿Desea limpiar el resultado calculado?")) return;
+  limpiarResultado();
 }
 
 function prepararDropzone(){
@@ -2875,25 +6765,117 @@ function prepararDropzone(){
   });
 }
 
+function tablaComoTexto(tablaId){
+  const tabla = document.getElementById(tablaId);
+  if (!tabla) return "";
+
+  const filas = Array.from(tabla.querySelectorAll("tr"));
+  return filas.map(tr => {
+    return Array.from(tr.children)
+      .map(celda => celda.textContent.replace(/\s+/g, " ").trim())
+      .join("\t");
+  }).filter(Boolean).join("\n");
+}
+
+async function copiarResumen(){
+  const texto = tablaComoTexto("tablaResumen");
+  if (!texto) {
+    mostrarErrores(["No hay resumen para copiar."]);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    mostrarOk("Resumen copiado al portapapeles.");
+  } catch (err) {
+    mostrarErrores(["No fue posible copiar el resumen automáticamente."]);
+  }
+}
+
+function imprimirVista(vista){
+  cambiarVista(vista);
+  setTimeout(() => window.print(), 120);
+}
+
+async function copiarFormatoRecargos(){
+  const texto = tablaComoTexto("tablaFormatoRecargos");
+  if (!texto || texto.includes("No hay datos calculados") || texto.includes("No hay recargos ni horas extra para mostrar")) {
+    mostrarErrores(["No hay formato de recargos para copiar."]);
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(texto);
+    mostrarOk("Formato copiado al portapapeles.");
+  } catch (err) {
+    mostrarErrores(["No fue posible copiar el formato automáticamente."]);
+  }
+}
+
+function establecerRangoMesActual(){
+  const inicioEl = document.getElementById("fechaInicioTurno");
+  const finEl = document.getElementById("fechaFinTurno");
+  if (!inicioEl || !finEl) return;
+  if (inicioEl.value || finEl.value) return;
+
+  const hoy = new Date();
+  const inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  const fin = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
+  inicioEl.value = formatoFechaInput(inicio);
+  finEl.value = formatoFechaInput(fin);
+}
+
+function cambiarVista(vista){
+  if (vista === "formato") {
+    pintarFormatoRecargos(resultadoActual || []);
+  }
+
+  document.querySelectorAll(".view-tab").forEach(btn => {
+    btn.classList.toggle("is-active", btn.dataset.view === vista);
+  });
+
+  document.querySelectorAll(".view-panel").forEach(panel => {
+    panel.classList.toggle("is-active", panel.classList.contains(`view-${vista}`));
+  });
+
+  document.querySelectorAll(".view-actions").forEach(barra => {
+    barra.classList.toggle("is-active", barra.classList.contains(`view-${vista}`));
+  });
+
+  limpiarMensajes();
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function actualizarBotonTema(){
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+  const icon = btn.querySelector(".theme-toggle-icon");
+  const text = btn.querySelector(".theme-toggle-text");
+  const dark = document.documentElement.getAttribute("data-theme") === "dark";
+  if (icon) icon.textContent = dark ? "☀" : "☾";
+  if (text) text.textContent = dark ? "Claro" : "Oscuro";
+  btn.setAttribute("aria-label", dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+  btn.setAttribute("title", dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+}
+
 function alternarTema(){
-  const actual = document.documentElement.getAttribute("data-theme") || "light";
-  const nuevo = actual === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", nuevo);
-  localStorage.setItem("temaRecargos", nuevo);
-  const btn = document.getElementById("btnTema");
-  if (btn) btn.textContent = nuevo === "dark" ? "Modo claro" : "Modo oscuro";
+  const actual = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  const siguiente = actual === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", siguiente);
+  try { localStorage.setItem("recargos-theme", siguiente); } catch (e) {}
+  actualizarBotonTema();
 }
 
 function cargarTema(){
-  const guardado = localStorage.getItem("temaRecargos") || "light";
-  document.documentElement.setAttribute("data-theme", guardado);
-  const btn = document.getElementById("btnTema");
-  if (btn) btn.textContent = guardado === "dark" ? "Modo claro" : "Modo oscuro";
+  let guardado = "dark";
+  try { guardado = localStorage.getItem("recargos-theme") || "dark"; } catch (e) {}
+  document.documentElement.setAttribute("data-theme", guardado === "light" ? "light" : "dark");
+  actualizarBotonTema();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(cargarTema, 0);
-  prepararAcceso();
+  cargarTema();
+  establecerRangoMesActual();
   prepararDropzone();
   actualizarResumenPeriodo();
 });
