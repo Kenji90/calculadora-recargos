@@ -7,7 +7,8 @@ const CONFIG_RECARGOS_IDS = [
   "pHEN",
   "pHEDF",
   "pHENF",
-  "horasExtraBloqueInterno"
+  "horasExtraBloqueInterno",
+  "inicioCiclo6x2Interno"
 ];
 
 function cargarConfiguracionGuardada(){
@@ -83,9 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tbody = document.querySelector("#tablaCalendario tbody");
   tbody.addEventListener("change", (e) => {
-    if (!e.target.closest("tr")) return;
-    actualizarEstiloFila(e.target.closest("tr"));
-    actualizarResumenPeriodo();
+    manejarCambioCalendario(e);
   });
 
   const archivo = document.getElementById("archivoTurnos");

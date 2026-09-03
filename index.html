@@ -78,17 +78,25 @@
         <div>
           <label for="horasExtraBloqueInterno">Horas extra por bloque</label>
           <select id="horasExtraBloqueInterno">
-            <option value="4_t5_t6_2h">4 h: últimas 2 h del turno 5 y 6</option>
-            <option value="6_t5_t6_3h">6 h: últimas 3 h del turno 5 y 6</option>
-            <option value="6_t4_t5_t6_2h" selected>6 h: últimas 2 h del turno 4, 5 y 6</option>
+            <option value="4_t5_t6_2h">4 h · 2+2 en turnos 5 y 6</option>
+            <option value="6_t5_t6_3h">6 h · 3+3 en turnos 5 y 6</option>
+            <option value="6_t4_t5_t6_2h" selected>6 h · 2+2+2 en turnos 4, 5 y 6</option>
+          </select>
+        </div>
+        <div>
+          <label for="inicioCiclo6x2Interno">Inicio del ciclo 6x2</label>
+          <select id="inicioCiclo6x2Interno">
+            <option value="M" selected>Mañana</option>
+            <option value="T">Tarde</option>
+            <option value="N">Noche</option>
           </select>
         </div>
       </div>
       <div class="hint config-help">
         <strong>Horas extra por bloque:</strong>
-        <span><b>4 h:</b> toma las últimas 2 horas del turno 5 y las últimas 2 horas del turno 6.</span>
-        <span><b>6 h tipo 3+3:</b> toma las últimas 3 horas del turno 5 y las últimas 3 horas del turno 6.</span>
-        <span><b>6 h tipo 2+2+2:</b> toma las últimas 2 horas del turno 4, del turno 5 y del turno 6.</span>
+        <span><b>4 h · 2+2:</b> últimas 2 horas del turno 5 y últimas 2 horas del turno 6.</span>
+        <span><b>6 h · 3+3:</b> últimas 3 horas del turno 5 y últimas 3 horas del turno 6.</span>
+        <span><b>6 h · 2+2+2:</b> últimas 2 horas del turno 4, turno 5 y turno 6.</span>
       </div>
       <div class="config-actions">
         <button type="button" class="ok" onclick="guardarConfiguracion()">Guardar configuración y recalcular</button>

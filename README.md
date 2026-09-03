@@ -126,7 +126,7 @@ Después de importar, la herramienta carga los turnos y ejecuta el cálculo.
 | **Resumen** | Pago estimado, descuentos y neto |
 | **Resultado** | Detalle de conceptos calculados |
 | **Formato Recargos** | Tabla mensual con jornada ordinaria y liquidación de horas |
-| **Configuración** | Parámetros internos de cálculo |
+| **Configuración** | Parámetros de recargos y distribución de horas extra |
 
 ---
 
@@ -177,3 +177,8 @@ La información se procesa localmente en el navegador:
 
 Esta herramienta sirve como apoyo para validación y estimación. La liquidación oficial debe ser revisada por el área responsable de nómina conforme a la normatividad laboral vigente.
 
+
+
+## Ciclo 6x2
+
+La app puede autocompletar el ciclo 6x2 una sola vez: cuando se selecciona el primer turno manual en una lista sin turnos de trabajo. En configuración se puede escoger si el ciclo inicia con mañana, tarde o noche. Después de aplicado, los cambios posteriores se realizan manualmente sin volver a rellenar toda la lista.

@@ -354,6 +354,7 @@ function aplicarRegistrosImportados(registros){
     throw new Error("Horarios no reconocidos: " + noReconocidos.slice(0, 8).join(" | "));
   }
 
+  ciclo6x2AplicadoInicial = true;
   actualizarResumenPeriodo();
   return {aplicados};
 }

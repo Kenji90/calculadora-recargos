@@ -106,6 +106,115 @@ function actualizarEstiloFila(tr){
   }
 }
 
+let ciclo6x2AplicadoInicial = false;
+
+function reiniciarCiclo6x2Inicial(){
+  ciclo6x2AplicadoInicial = false;
+}
+
+function contarTurnosTrabajoSeleccionados(){
+  return Array.from(document.querySelectorAll("#tablaCalendario tbody tr .turno-dia"))
+    .filter(sel => parsearTurno(sel.value || "").tipo === "turno")
+    .length;
+}
+
+function obtenerOrdenCiclo6x2(){
+  const inicio = document.getElementById("inicioCiclo6x2Interno")?.value || "M";
+  const ordenBase = ["M", "N", "T"];
+  const indiceInicio = ordenBase.indexOf(inicio);
+
+  if (indiceInicio === -1) return ordenBase;
+  return ordenBase.slice(indiceInicio).concat(ordenBase.slice(0, indiceInicio));
+}
+
+function turnoPrincipalDesdeValor(valor){
+  const v = String(valor || "").trim();
+  if (v === "06:00 - 14:00") return "M";
+  if (v === "22:00 - 06:00") return "N";
+  if (v === "14:00 - 22:00") return "T";
+  return null;
+}
+
+function valorTurnoPrincipal(clave){
+  const mapa = {
+    M: "06:00 - 14:00",
+    N: "22:00 - 06:00",
+    T: "14:00 - 22:00"
+  };
+  return mapa[clave] || "";
+}
+
+function valorTurnoParaBloque(turnoInicial, numeroBloque){
+  const orden = obtenerOrdenCiclo6x2();
+  const clave = orden[numeroBloque % orden.length];
+  return valorTurnoPrincipal(clave) || turnoInicial;
+}
+
+function aplicarCiclo6x2DesdeFila(filaInicio, turnoInicial, opciones = {}){
+  const turno = parsearTurno(turnoInicial);
+  if (!filaInicio || turno.tipo !== "turno") return false;
+
+  const filas = Array.from(document.querySelectorAll("#tablaCalendario tbody tr"));
+  const inicioIdx = filas.indexOf(filaInicio);
+  if (inicioIdx < 0) return false;
+
+  for (let i = inicioIdx; i < filas.length; i++) {
+    const posicion = i - inicioIdx;
+    const bloque = Math.floor(posicion / 8);
+    const diaDentroCiclo = posicion % 8;
+    const select = filas[i].querySelector(".turno-dia");
+    if (!select) continue;
+
+    select.value = diaDentroCiclo < 6
+      ? valorTurnoParaBloque(turnoInicial, bloque)
+      : "DESCANSO";
+
+    actualizarEstiloFila(filas[i]);
+  }
+
+  actualizarResumenPeriodo();
+  limpiarResultado();
+  if (opciones.mensaje) mostrarOk("Ciclo 6x2 aplicado desde el primer turno seleccionado.");
+  return true;
+}
+
+function aplicarCiclo6x2DesdePrimerTurno(){
+  const filas = Array.from(document.querySelectorAll("#tablaCalendario tbody tr"));
+  const filaInicio = filas.find(tr => {
+    const valor = tr.querySelector(".turno-dia")?.value || "";
+    return parsearTurno(valor).tipo === "turno";
+  });
+
+  if (!filaInicio) {
+    mostrarErrores(["Seleccione primero un turno de trabajo para iniciar el ciclo 6x2."]);
+    return;
+  }
+
+  const turnoInicial = filaInicio.querySelector(".turno-dia")?.value || "";
+  aplicarCiclo6x2DesdeFila(filaInicio, turnoInicial, {mensaje:true});
+}
+
+function manejarCambioCalendario(e){
+  const tr = e.target.closest("tr");
+  if (!tr) return;
+
+  actualizarEstiloFila(tr);
+
+  if (e.target.classList.contains("turno-dia")) {
+    const turno = parsearTurno(e.target.value || "");
+    const autoCiclo = (document.getElementById("autoCiclo6x2Interno")?.value || "si") === "si";
+
+    if (autoCiclo && !ciclo6x2AplicadoInicial && turno.tipo === "turno" && contarTurnosTrabajoSeleccionados() === 1) {
+      ciclo6x2AplicadoInicial = true;
+      aplicarCiclo6x2DesdeFila(tr, e.target.value);
+      return;
+    }
+  }
+
+  actualizarResumenPeriodo();
+  limpiarResultado();
+}
+
 function obtenerEstadoCalendarioActual(){
   const estado = new Map();
 
@@ -142,6 +251,7 @@ function generarCalendario(){
   // Así, si se amplía el rango hacia atrás o hacia adelante, lo ya digitado permanece.
   const estadoPrevio = obtenerEstadoCalendarioActual();
 
+  reiniciarCiclo6x2Inicial();
   tbody.innerHTML = "";
 
   const NOMBRES_DIA = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
@@ -201,6 +311,7 @@ function generarCalendario(){
 }
 
 function limpiarCalendario(){
+  reiniciarCiclo6x2Inicial();
   document.querySelector("#tablaCalendario tbody").innerHTML = "";
   actualizarResumenPeriodo();
   limpiarResultado();

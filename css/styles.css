@@ -4824,3 +4824,100 @@
   .config-actions { justify-content: stretch; }
   .config-actions button { width: 100%; min-width: 0; }
 }
+
+/* ===== Ajustes v26: colores de turnos y ciclo 6x2 ===== */
+.cycle-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-panel);
+}
+
+.cycle-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.cycle-copy strong {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.cycle-copy span {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+html[data-theme="dark"] .turno-dia.color-m,
+html[data-theme="dark"] .turno-dia.color-4h,
+html[data-theme="dark"] .turno-dia.color-12h-dia {
+  background: rgba(34, 197, 94, .20) !important;
+  color: #bbf7d0 !important;
+  border-color: rgba(34, 197, 94, .48) !important;
+}
+
+html[data-theme="light"] .turno-dia.color-m,
+html[data-theme="light"] .turno-dia.color-4h,
+html[data-theme="light"] .turno-dia.color-12h-dia {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  border-color: #86efac !important;
+}
+
+html[data-theme="dark"] .turno-dia.color-t,
+html[data-theme="dark"] .turno-dia.color-12h-tarde {
+  background: rgba(59, 130, 246, .20) !important;
+  color: #bfdbfe !important;
+  border-color: rgba(59, 130, 246, .48) !important;
+}
+
+html[data-theme="light"] .turno-dia.color-t,
+html[data-theme="light"] .turno-dia.color-12h-tarde {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+  border-color: #93c5fd !important;
+}
+
+html[data-theme="dark"] .turno-dia.color-n,
+html[data-theme="dark"] .turno-dia.color-12h-noche {
+  background: rgba(245, 158, 11, .22) !important;
+  color: #fde68a !important;
+  border-color: rgba(245, 158, 11, .48) !important;
+}
+
+html[data-theme="light"] .turno-dia.color-n,
+html[data-theme="light"] .turno-dia.color-12h-noche {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fcd34d !important;
+}
+
+html[data-theme="dark"] .turno-dia.color-descanso {
+  background: #27272a !important;
+  color: #d4d4d8 !important;
+  border-color: #52525b !important;
+}
+
+html[data-theme="light"] .turno-dia.color-descanso {
+  background: #e4e4e7 !important;
+  color: #52525b !important;
+  border-color: #c7c7cc !important;
+}
+
+@media (max-width: 720px) {
+  .cycle-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cycle-panel button {
+    width: 100%;
+  }
+}
